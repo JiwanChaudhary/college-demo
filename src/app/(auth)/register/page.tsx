@@ -4,6 +4,7 @@ import { Input, InputLabel, MenuItem } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import * as React from "react";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import axios from "axios";
 
 // type User = {
 //   name: string;
@@ -31,7 +32,7 @@ const Register = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let { name, value } = e.target;
-    console.log(value);
+    // console.log(value);
 
     setUser({
       ...user,
@@ -39,10 +40,10 @@ const Register = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    // e.preventDefault();
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     console.log(user, role);
-    // console.log("clicked");
+    let res = await axios.post("/api/user/register", { user, role });
   };
 
   return (
