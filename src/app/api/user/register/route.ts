@@ -35,6 +35,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Check if email aready registered
+    const isEmailRegistered = await User.findOne({ email });
+
+    if (isEmailRegistered) {
+      return NextResponse.json(
+        {
+          message: "Email already registered",
+          success: false,
+        },
+        {
+          status: 400,
+        }
+      );
+    }
+
     // hash password using bcrypt
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);

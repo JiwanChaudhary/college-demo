@@ -5,23 +5,18 @@ import FormControl from "@mui/material/FormControl";
 import * as React from "react";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import axios from "axios";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-// type User = {
-//   name: string;
-//   email: string;
-//   password: string;
-// };
-
-// type Role = {
-//   role: string;
-// };
-
-const Register = () => {
+const page = () => {
+  const router = useRouter();
   const [user, setUser] = React.useState({
     name: "",
     email: "",
     password: "",
   });
+  const [error, setError] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState("");
 
   const [role, setRole] = React.useState("user");
 
@@ -41,9 +36,17 @@ const Register = () => {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log(user, role);
-    let res = await axios.post("/api/user/register", { user, role });
+    try {
+      e.preventDefault();
+      setError(false);
+      await axios.post("/api/user/register", { user, role });
+      alert("User Registered Successfully!");
+      router.push("/login");
+    } catch (error: any) {
+      setError(true);
+      setErrorMessage(error.response.data.message);
+      // console.log(error.response.data.message);
+    }
   };
 
   return (
@@ -100,6 +103,7 @@ const Register = () => {
               <MenuItem value="vendor">vendor</MenuItem>
             </Select>
           </FormControl>
+          {error && <small>{errorMessage}</small>}
           <RegisterButton
             onClick={handleSubmit}
             disableElevation
@@ -109,9 +113,18 @@ const Register = () => {
             Register
           </RegisterButton>
         </form>
+        <small>
+          Already have an account?{" "}
+          <Link
+            style={{ textDecoration: "none", color: "blue" }}
+            href={"/login"}
+          >
+            Login
+          </Link>
+        </small>
       </FormGroup>
     </FormWrapper>
   );
 };
 
-export default Register;
+export default page;
