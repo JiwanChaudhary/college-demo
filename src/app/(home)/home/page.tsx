@@ -1,22 +1,13 @@
-"use client";
-
-import axios from "axios";
-import { useRouter } from "next/navigation";
+import Logout from "@/components/Logout";
+import Navbar from "@/components/Navbar";
 import * as React from "react";
 
 const page = () => {
-  const router = useRouter();
-
-  const handleLogout = async () => {
-    await axios.get("/api/user/logout");
-    alert("Logout success!");
-    router.push("/login");
-  };
-
   return (
     <div>
       <h4>Home</h4>
-      <button onClick={handleLogout}>Logout</button>
+      <Logout />
+      <Navbar />
     </div>
   );
 };

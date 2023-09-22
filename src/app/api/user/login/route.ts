@@ -58,6 +58,7 @@ export async function POST(request: NextRequest) {
     const tokenData = {
       id: findUser._id,
       email: findUser.email,
+      name: findUser.name,
     };
 
     const token = await jwt.sign(tokenData, process.env.JWT_SECRET as string, {
@@ -76,7 +77,7 @@ export async function POST(request: NextRequest) {
     );
 
     response.cookies.set("token", token, { httpOnly: true });
-    return response
+    return response;
   } catch (error) {
     return NextResponse.json(
       {
