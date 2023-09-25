@@ -3,6 +3,7 @@ import connectDB from "@/db/connext";
 import User from "@/models/userSchema";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { sendMail } from "@/helper/mailer";
 
 export async function POST(request: NextRequest) {
   await connectDB();
@@ -64,6 +65,9 @@ export async function POST(request: NextRequest) {
     const token = await jwt.sign(tokenData, process.env.JWT_SECRET as string, {
       expiresIn: "1d",
     });
+
+    // send mail verification email
+    await sendMail({ email, emailType: "VERIFY", userId: findUser._id });
 
     // if user credentials match, return user
     const response = await NextResponse.json(

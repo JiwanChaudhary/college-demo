@@ -1,22 +1,20 @@
 import connectDB from "@/db/connext";
 import User from "@/models/userSchema";
-import { sendMail } from "@/helper/mailer";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   await connectDB();
   try {
-    // get email from user
-    const { email } = await request.json();
+    const { token } = await request.json();
+    console.log(token);
 
-    // find user on the basis of email
-    const user = await User.findOne({ email });
+    // find user on the basis of token
+    const user = await User.findOne({ verifyToken: token });
 
-    // show error if user does not exist
     if (!user) {
       return NextResponse.json(
         {
-          message: "User is not registered",
+          message: "Invalid Token",
           success: false,
         },
         {
@@ -25,14 +23,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // send mail if the user found
-    await sendMail({ email, emailType: "RESET", userId: user._id });
+    user.isVerified = true;
+    user.verifyToken = undefined;
+    user.verifyTokenExpiry = undefined;
+
+    await user.save();
 
     return NextResponse.json(
       {
-        message: "User found and email sent",
+        message: "User Verified Successfully!",
         success: true,
-        user,
       },
       {
         status: 200,
@@ -41,8 +41,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     return NextResponse.json(
       {
-        error: error,
-        message: "Email not sent",
+        message: "Something went wrong",
         success: false,
       },
       {

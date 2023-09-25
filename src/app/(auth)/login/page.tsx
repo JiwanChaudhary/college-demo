@@ -76,6 +76,9 @@ const page = () => {
               onChange={handleChange}
             />
           </FormControl>
+          <Link href={"/resetpassword"} style={{ textDecoration: "none" }}>
+            Forgot Password?
+          </Link>
           {error && <small>{errorMessage}</small>}
           <RegisterButton
             onClick={handleSubmit}

@@ -25,6 +25,35 @@ export const sendMail = async ({ email, emailType, userId }: UserDetails) => {
       },
     });
 
+    // verifyUser
+    if (emailType === "VERIFY") {
+      await User.findByIdAndUpdate(
+        userId,
+        {
+          verifyToken: hashedToken,
+          verifyTokenExpiry: Date.now() + 3600,
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
+      const mailOptions = {
+        from: process.env.SMTP_MAIL,
+        to: email,
+        subject: "Verify Email",
+        html: `
+                <p>
+                    Copy and paste the link below in your browser to verify your email.
+                    <br/>
+                    ${process.env.DOMAIN}/verifyemail?token=${hashedToken}
+                </p>
+            `,
+      };
+      const mailResponse = await transport.sendMail(mailOptions);
+      return mailResponse;
+    }
+
     // resetPassword
     if (emailType === "RESET") {
       await User.findByIdAndUpdate(

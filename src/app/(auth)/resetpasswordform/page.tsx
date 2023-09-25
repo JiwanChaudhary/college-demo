@@ -1,9 +1,12 @@
 "use client";
 
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import * as React from "react";
 
 const page = () => {
+  const router = useRouter();
+
   const [password, setPassword] = React.useState("");
   const [token, setToken] = React.useState("");
 
@@ -13,6 +16,7 @@ const page = () => {
     try {
       await axios.post(`/api/user/resetpassword`, { password, token });
       alert("password changed successfully");
+      router.push("/login");
     } catch (error) {
       console.log(error);
     }
