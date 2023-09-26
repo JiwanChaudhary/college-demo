@@ -2,7 +2,7 @@
 import { createTheme } from "@mui/material/styles";
 
 export const Colors = {
-  main: "#574CDC",
+  main: "#ED870F",
   black: "#000",
   white: "#fff",
 };
