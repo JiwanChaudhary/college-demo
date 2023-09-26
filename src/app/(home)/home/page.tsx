@@ -1,4 +1,6 @@
-import Logout from "@/components/Logout";
+import Footer from "@/components/footer/Footer";
+import FirstSection from "@/components/home/firstSection/FirstSection";
+import SecondSection from "@/components/home/secondSection/secondSection";
 import Navbar from "@/components/navbar/Navbar";
 import VerifyEmail from "@/components/VerifyEmail";
 import * as React from "react";
@@ -8,7 +10,10 @@ const page = () => {
     <div>
       {/* <h4>Home</h4> */}
       <Navbar />
-      {/* <Logout />
+      <FirstSection />
+      <SecondSection />
+      <Footer />
+      {/* 
       <VerifyEmail /> */}
     </div>
   );

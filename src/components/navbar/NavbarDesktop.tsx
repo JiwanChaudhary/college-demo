@@ -22,6 +22,9 @@ const NavbarDesktop = () => {
         color: Colors.white,
         padding: "10px 60px",
         textAlign: "center",
+        position: "sticky",
+        top: 0,
+        zIndex: 100,
       }}
     >
       <div
@@ -43,7 +46,11 @@ const NavbarDesktop = () => {
         <div>
           {navElements.map((navElement) => (
             <>
-              <Link className={styles.link} href={navElement.id}>
+              <Link
+                key={navElement.id}
+                className={styles.link}
+                href={navElement.id}
+              >
                 {navElement.value}
               </Link>
             </>

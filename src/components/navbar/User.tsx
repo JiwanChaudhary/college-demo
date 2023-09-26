@@ -82,9 +82,10 @@ const User = () => {
               padding: "5px",
               border: "1px solid #ED870F",
               position: "absolute",
-              top: "8%",
-              right: "60px",
-              borderRadius: "5px"
+              top: "8% !important",
+              right: "10px",
+              borderRadius: "5px",
+              zIndex: "1000",
             }}
           >
             <Logout />
@@ -96,7 +97,8 @@ const User = () => {
                 border: "none",
                 padding: "5px 8px",
                 borderRadius: "5px",
-                marginTop: "5px"
+                marginTop: "5px",
+                cursor: "pointer",
               }}
               href={"/profile"}
             >
