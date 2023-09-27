@@ -15,6 +15,11 @@ const navElements = [
 ];
 
 const NavbarDesktop = () => {
+
+  // const handleNavItem = () => {
+
+  // }
+
   return (
     <div
       style={{
@@ -49,6 +54,8 @@ const NavbarDesktop = () => {
               <Link
                 key={navElement.id}
                 className={styles.link}
+                // className={styles.link === navElement.id ? 'active' : ""}
+                // onClick={() => handleNavItem(navElement.id)}
                 href={navElement.id}
               >
                 {navElement.value}

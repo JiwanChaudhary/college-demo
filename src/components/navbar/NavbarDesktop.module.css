@@ -17,6 +17,10 @@
   left: 0; */
 }
 
+.link:active {
+  color: red;
+}
+
 /* .link::before {
     content: '';
     position: absolute;
