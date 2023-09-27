@@ -1,0 +1,13 @@
+.eventSpace {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: center;
+  justify-items: center;
+  margin: 15px 0 0 0;
+  align-items: center;
+  border: 1px solid rgba(255, 235, 0, 0.75);
+  gap: 10px;
+  box-shadow: 3px 3px 5px 0px rgba(255, 235, 0, 0.75);
+  -webkit-box-shadow: 3px 3px 5px 0px rgba(255, 235, 0, 0.75);
+  -moz-box-shadow: 3px 3px 5px 0px rgba(255, 235, 0, 0.75);
+}
