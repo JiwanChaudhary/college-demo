@@ -8,14 +8,11 @@ import User from "./User";
 // nav elements
 const navElements = [
   { id: "home", value: "HOME" },
-  { id: "event", value: "EVENT" },
-  { id: "venue", value: "VENUE" },
   { id: "contact", value: "CONTACT" },
   { id: "about", value: "ABOUT" },
 ];
 
 const NavbarDesktop = () => {
-
   // const handleNavItem = () => {
 
   // }
@@ -48,6 +45,15 @@ const NavbarDesktop = () => {
             style={{ cursor: "pointer" }}
           />
         </div>
+        {/* search by venue */}
+        <div
+          style={{
+            zIndex: 100,
+            textAlign: "center",
+          }}
+        >
+          <input type="text" id="location" placeholder="search venue" style={{padding: "8px"}} />
+        </div>
         <div>
           {navElements.map((navElement) => (
             <>
@@ -63,6 +69,7 @@ const NavbarDesktop = () => {
             </>
           ))}
         </div>
+
         <User />
       </div>
     </div>

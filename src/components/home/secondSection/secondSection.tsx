@@ -28,7 +28,7 @@ const SecondSection = () => {
     <section style={{ padding: "30px 60px" }}>
       <div style={{ background: "#000", color: "#fff", padding: "10px 15px" }}>
         {/* date and search */}
-        <Filter />
+        {/* <Filter /> */}
         {/*  */}
         {/*  */}
         {/*  */}
@@ -36,14 +36,14 @@ const SecondSection = () => {
         <main
           style={{
             display: "grid",
-            gridTemplateColumns: "1fr 1fr",
+            // gridTemplateColumns: "1fr 1fr",
             margin: "0 0 15px 0",
             alignItems: "center",
             gap: "10px",
           }}
         >
           {/* event space */}
-          <EventSection />
+          {/* <EventSection /> */}
           {/* venue space */}
           <VenueSection />
         </main>

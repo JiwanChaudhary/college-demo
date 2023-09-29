@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
       role,
     });
 
-    if (user) {
+    if (registerUser) {
       return NextResponse.json(
         {
           message: "User created successfully",

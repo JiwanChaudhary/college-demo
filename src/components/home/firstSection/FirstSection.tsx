@@ -1,10 +1,21 @@
 import Image from "next/image";
 import React from "react";
+import SwipeableTextMobileStepper from "../secondSection/Carousel";
 
 const FirstSection = () => {
   return (
-    <div>
-      <div style={{ position: "relative" }}>
+    <div style={{ padding: "10px 60px" }}>
+      <div
+        style={{
+          // background: "#000",
+          display: "flex",
+          justifyContent: "center",
+          // padding: "10px",
+        }}
+      >
+        <SwipeableTextMobileStepper />
+      </div>
+      {/* <div style={{ position: "relative" }}>
         <Image
           style={{
             margin: "0px auto",
@@ -28,7 +39,7 @@ const FirstSection = () => {
         >
           <span>HOME</span> | <span style={{ color: "#ED870F" }}>HOME</span>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

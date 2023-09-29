@@ -24,8 +24,14 @@ const venueSpaceSchema = new mongoose.Schema(
       required: true,
     },
     phone: {
-      type: Array,
+      type: Number,
       required: true,
+    },
+    email: {
+      type: String,
+    },
+    tags: {
+      type: Array,
     },
     currentBookings: {
       type: Array,

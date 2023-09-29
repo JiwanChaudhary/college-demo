@@ -1,45 +1,80 @@
-"use client"
+"use client";
 
 import * as React from "react";
-import { DatePicker, Space } from "antd";
-const { RangePicker } = DatePicker;
+import SearchIcon from "@mui/icons-material/Search";
 
 const Filter = () => {
   const [searchKey, setSearchKey] = React.useState("");
-
-  // handleDate
-  const handleDate = (date: any) => {
-    console.log(date);
-  };
 
   // filter by search
   function filterBySearch() {}
   return (
     <main
       style={{
-        display: "grid",
-        gridTemplateColumns: "1fr 1fr",
-        justifyContent: "space-between",
-        justifyItems: "center",
-        margin: "15px 0",
+        margin: "10px 0 0 0",
+        padding: "10px 60px",
       }}
     >
-      {/* date */}
-      <div style={{ zIndex: 100 }}>
-        <Space direction={"vertical"} size={"small"}>
-          <RangePicker format="DD-MM-YYYY" onChange={handleDate} />
-        </Space>
-      </div>
-      {/* search by entering name */}
-      <div>
-        <input
-          style={{ padding: "5px 8px" }}
-          type="text"
-          placeholder="search venues or events"
-          value={searchKey}
-          onChange={(e) => setSearchKey(e.target.value)}
-          onKeyUp={filterBySearch}
-        />
+      <div
+        style={{
+          background: "#000",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: "20px",
+        }}
+      >
+        {/* date */}
+        <div
+          style={{
+            zIndex: 100,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            textAlign: "center",
+            marginRight: "5px"
+          }}
+        >
+          <input
+            style={{ width: "150px", padding: "5px", border: "none" }}
+            type="text"
+            id="location"
+            placeholder="Search by location"
+          />
+        </div>
+        {/* search by entering name */}
+        <div>
+          {/* <label htmlFor="event">Event</label> */}
+          <select
+            name=""
+            style={{ width: "150px", padding: "5px", border: "none" }}
+          >
+            <option value="all">Select Event</option>
+            <option value="marriage">Marriage</option>
+            <option value="jk">jk</option>
+            <option value="jk">jk</option>
+            <option value="jk">jk</option>
+          </select>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            marginLeft: "5px",
+            justifyContent: "center",
+            background: "white",
+            color: "#000",
+            cursor: "pointer",
+          }}
+        >
+          <SearchIcon />
+          <button
+            style={{ padding: "4px", border: "none", cursor: "pointer" }}
+            type="button"
+          >
+            Search
+          </button>
+        </div>
       </div>
     </main>
   );
