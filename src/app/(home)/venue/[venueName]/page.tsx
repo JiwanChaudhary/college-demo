@@ -24,6 +24,7 @@ const page = ({ params }: any) => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [image, setImage] = React.useState([]);
   const [tags, setTags] = React.useState([]);
+  const [phone, setPhone] = React.useState([]);
   const [venue, setVenue] = React.useState<any>();
   const maxSteps = image.length;
 
@@ -56,6 +57,7 @@ const page = ({ params }: any) => {
     setImage(response.data.venue.imageUrls);
     setTags(response.data.venue.tags);
     setVenue(response.data.venue);
+    setPhone(response.data.venue.phone);
   };
 
   React.useEffect(() => {
@@ -127,13 +129,92 @@ const page = ({ params }: any) => {
             }
           />
         </Box>
-        {/* select */}
-        <select>
-          {tags.map((tag: any) => (
-            <option value={tag}>{tag}</option>
-          ))}
-        </select>
       </main>
+      {/* div */}
+      <hr style={{ margin: "10px 0" }} />
+      {/* content */}
+      <div>
+        <h1>{venue?.venueName}</h1>
+        <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr" }}>
+          {/* Venue Desc with information */}
+          <div>
+            <p>Description:</p>
+            <p>{venue?.description}</p>
+            {/* packages */}
+            <div>FAQ here</div>
+            {/* Venue Information here */}
+            <div>
+              <p>location: {venue?.address}</p>
+              <p>
+                phone:{" "}
+                {phone.map((p) => (
+                  <span>{p}, </span>
+                ))}
+              </p>
+              <p>email: {venue?.email}</p>
+            </div>
+          </div>
+          <div
+            style={{
+              border: "1px solid #fff",
+              padding: "5px",
+              textAlign: "center",
+            }}
+          >
+            <form>
+              <div>
+                {/* Date and Time */}
+                <Space direction="vertical" size={5}>
+                  <RangePicker
+                    showTime={{ format: "HH" }}
+                    format="DD-MM-YYYY HH"
+                    onChange={handleDate}
+                  />
+                </Space>
+              </div>
+              {/* Number of Guests */}
+              <div>
+                Number of Guests:
+                <input
+                  type="number"
+                  placeholder="Please specify number of Guests"
+                />
+              </div>
+              {/* Event type */}
+              <div>
+                <p>Select Event Type:</p>
+                <select>
+                  {tags.map((tag: any) => (
+                    <option value={tag}>{tag}</option>
+                  ))}
+                </select>
+              </div>
+              {/* Select Package Type */}
+              <div>
+                <p>Select package Type</p>
+                <select>
+                  <option value="normal">Normal</option>
+                  <option value="normal">Premium</option>
+                  <option value="normal">Deluxe</option>
+                </select>
+              </div>
+              {/* Personal Details */}
+              <div>
+                <input type="text" placeholder="Enter name" />
+                <input type="phone" placeholder="Enter Phone" />
+                <input type="email" placeholder="Enter email" />
+              </div>
+              {/* Specific message */}
+              <div>
+                <textarea placeholder="Enter specific message">
+                  Message
+                </textarea>
+              </div>
+              <button type="submit">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </section>
   );
 };

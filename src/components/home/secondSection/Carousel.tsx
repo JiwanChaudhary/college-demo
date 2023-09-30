@@ -16,36 +16,16 @@ import axios from "axios";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
-// const images = [
-//   {
-//     label: "ABC Hotel",
-//     imgPath: "/images/venue.jpeg",
-//     location: "Kathmandu",
-//   },
-//   {
-//     label: "ABC Banquet",
-//     imgPath: "/images/venue.jpeg",
-//     location: "Pokhara",
-//   },
-//   {
-//     label: "ABC Hall",
-//     imgPath: "/images/venue.jpeg",
-//     location: "Nepal",
-//   },
-//   {
-//     label: "Hall Nepal",
-//     imgPath: "/images/venue.jpeg",
-//     location: "Himal",
-//   },
-// ];
-
 function SwipeableTextMobileStepper() {
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
-  const [venues, setVenues] = React.useState([]);
-  const [venueImages, setVenueImages] = React.useState([]);
+  const [venues, setVenues] = React.useState<any>([]);
+  // const [venueImages, setVenueImages] = React.useState([]);
   const [totalImagesNumber, setTotalImagesNumber] = React.useState(0);
   const maxSteps = totalImagesNumber;
+  // console.log(maxSteps);
+  // console.log(venues);
+  // console.log(activeStep);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -62,13 +42,11 @@ function SwipeableTextMobileStepper() {
   // Get data from database
   const getVenueDetails = async () => {
     const response = await axios.get("/api/venue");
-    console.log(response.data.venues);
+    // console.log(response.data.venues.length);
+    setTotalImagesNumber(response.data.venues.length);
 
     setVenues(response.data.venues);
-    // setVenueImages(response.data.venues.imageUrls)
-    // setTotalImagesNumber(response.data.venues.imageUrls.length)
-    // console.log(venueImages);
-    // console.log(totalImagesNumber);
+    console.log(venues);
   };
 
   React.useEffect(() => {
@@ -83,7 +61,7 @@ function SwipeableTextMobileStepper() {
         onChangeIndex={handleStepChange}
         enableMouseEvents
       >
-        {venues.map((step: any, index) => (
+        {venues.map((step: any, index: any) => (
           <div key={step.venueName}>
             {Math.abs(activeStep - index) <= 2 ? (
               <Box
@@ -91,8 +69,6 @@ function SwipeableTextMobileStepper() {
                 sx={{
                   height: 300,
                   display: "flex",
-                  // height: "400px",
-                  // maxWidth: 400,
                   overflow: "hidden",
                   width: "100%",
                 }}
@@ -148,30 +124,19 @@ function SwipeableTextMobileStepper() {
           color: "#fff",
         }}
       >
-        <Typography sx={{ textAlign: "center", display: "flex" }}>
-          <LocationOnIcon />
-          {/* <Typography>{venues[activeStep].address}</Typography> */}
-        </Typography>
-        {/* <Typography>{venues[activeStep].venueName}</Typography> */}
+        <>
+          <Typography sx={{ textAlign: "center", display: "flex" }}>
+            <LocationOnIcon />
+            <Typography sx={{ color: "#fff" }}>
+              {venues[activeStep]?.address}
+            </Typography>
+          </Typography>
+
+          <Typography sx={{ color: "#fff" }}>
+            {venues[activeStep]?.venueName}
+          </Typography>
+        </>
       </Paper>
-      {/* Content */}
-      {/* <div style={{ marginTop: "10px" }}>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia unde
-          exercitationem soluta, ratione explicabo sapiente ipsum
-        </p>
-        <Link
-          href={"/venue"}
-          style={{
-            textDecoration: "none",
-            color: "purple",
-            cursor: "pointer",
-            float: "right",
-          }}
-        >
-          View the destination Venues?
-        </Link>
-      </div> */}
     </Box>
   );
 }
