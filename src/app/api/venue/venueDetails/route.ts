@@ -1,6 +1,7 @@
 import connectDB from "@/db/connext";
 import Venue from "@/models/venueSpace";
 import { NextRequest, NextResponse } from "next/server";
+import jwt from "jsonwebtoken";
 
 export async function POST(request: NextRequest) {
   await connectDB();
@@ -11,7 +12,16 @@ export async function POST(request: NextRequest) {
 
     const { venueName, address, maxCapacity, rentalFee, email } = vendorDetails;
 
+    // get current vendor ID from jwt
+    const token: any = await request.cookies.get("token")?.value;
+
+    const decodeToken: any = await jwt.verify(
+      token,
+      process.env.JWT_SECRET as string
+    );
+
     const updateVenue = await Venue.create({
+      userId: decodeToken.id,
       venueName,
       address,
       maxCapacity,
