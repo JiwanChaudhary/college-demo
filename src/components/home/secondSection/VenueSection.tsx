@@ -4,15 +4,12 @@ import AddLocationIcon from "@mui/icons-material/AddLocation";
 import Modal from "@mui/material/Modal";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import Link from "next/link";
 
 const VenueSection = () => {
   const router = useRouter();
   const [venues, setVenues] = React.useState([]);
 
-  function handleVenue() {
-    router.push("/singlevenue");
-    // alert("Hello")
-  }
 
   // Get data from database
   const getVenueDetails = async () => {
@@ -102,13 +99,19 @@ const VenueSection = () => {
                 margin: "5px 10px",
               }}
             >
-              <button
-                onClick={handleVenue}
+              <Link
+                href={`/venue/${venue.venueName}`}
                 type="button"
-                style={{ padding: "5px 8px" }}
+                style={{
+                  padding: "5px 8px",
+                  textDecoration: "none",
+                  border: "1px solid #000",
+                  color: "#000",
+                  borderRadius: "5px"
+                }}
               >
                 View Details
-              </button>
+              </Link>
             </div>
           </div>
         </div>
