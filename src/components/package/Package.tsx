@@ -1,6 +1,7 @@
 "use client";
 
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import * as React from "react";
 
 type EventPackage = {
@@ -14,6 +15,7 @@ type EventPackage = {
 };
 
 const Package = () => {
+  const router = useRouter();
   const [eventPackage, setEventPackage] = React.useState<
     EventPackage | null | any
   >({
@@ -40,8 +42,10 @@ const Package = () => {
     try {
       await axios.post(`/api/package`, { eventPackage });
       alert("Package created successfully");
+      setEventPackage("");
+      router.refresh();
     } catch (error) {
-    //   console.log(error);
+      console.log(error);
     }
   };
 
