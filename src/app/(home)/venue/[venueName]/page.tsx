@@ -5,25 +5,21 @@ import * as React from "react";
 import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MobileStepper from "@mui/material/MobileStepper";
-// import Paper from "@mui/material/Paper";
-// import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
-import { DatePicker, Space } from "antd";
-const { RangePicker } = DatePicker;
+
+import VenueBookingForm from "@/venue/venue-booking-form/VenueBookingForm";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const page = ({ params }: any) => {
-  // console.log(params);
   const { venueName } = params;
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const [image, setImage] = React.useState([]);
-  const [tags, setTags] = React.useState([]);
   const [phone, setPhone] = React.useState([]);
   const [venue, setVenue] = React.useState<any>();
   const maxSteps = image.length;
@@ -40,22 +36,9 @@ const page = ({ params }: any) => {
     setActiveStep(step);
   };
 
-  // console.log(venue);
-
-  //   handle Date
-  function handleDate(dates: any) {
-    // console.log(dates);
-  }
-
-  // console.log(image);
-  // console.log(image.length);
-
   const singleVenue = async () => {
     const response = await axios.get(`/api/venue/${venueName}`);
-    // console.log(response.data.venue);
-    // console.log(response.data.venue.imageUrls.length);
     setImage(response.data.venue.imageUrls);
-    setTags(response.data.venue.tags);
     setVenue(response.data.venue);
     setPhone(response.data.venue.phone);
   };
@@ -161,57 +144,8 @@ const page = ({ params }: any) => {
               textAlign: "center",
             }}
           >
-            <form>
-              <div>
-                {/* Date and Time */}
-                <Space direction="vertical" size={5}>
-                  <RangePicker
-                    showTime={{ format: "HH" }}
-                    format="DD-MM-YYYY HH"
-                    onChange={handleDate}
-                  />
-                </Space>
-              </div>
-              {/* Number of Guests */}
-              <div>
-                Number of Guests:
-                <input
-                  type="number"
-                  placeholder="Please specify number of Guests"
-                />
-              </div>
-              {/* Event type */}
-              <div>
-                <p>Select Event Type:</p>
-                <select>
-                  {tags.map((tag: any) => (
-                    <option value={tag}>{tag}</option>
-                  ))}
-                </select>
-              </div>
-              {/* Select Package Type */}
-              <div>
-                <p>Select package Type</p>
-                <select>
-                  <option value="normal">Normal</option>
-                  <option value="normal">Premium</option>
-                  <option value="normal">Deluxe</option>
-                </select>
-              </div>
-              {/* Personal Details */}
-              <div>
-                <input type="text" placeholder="Enter name" />
-                <input type="phone" placeholder="Enter Phone" />
-                <input type="email" placeholder="Enter email" />
-              </div>
-              {/* Specific message */}
-              <div>
-                <textarea placeholder="Enter specific message">
-                  Message
-                </textarea>
-              </div>
-              <button type="submit">Submit</button>
-            </form>
+            {/* venue Booking Form */}
+            <VenueBookingForm venueName={venueName} />
           </div>
         </div>
       </div>

@@ -46,7 +46,7 @@ function SwipeableTextMobileStepper() {
     setTotalImagesNumber(response.data.venues.length);
 
     setVenues(response.data.venues);
-    console.log(venues);
+    // console.log(venues);
   };
 
   React.useEffect(() => {
