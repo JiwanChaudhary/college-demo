@@ -17,11 +17,19 @@ const eventBookingSpace = new mongoose.Schema(
       ref: "Package",
       required: true,
     },
+    message: {
+      type: String,
+      // required: true,
+    },
     eventType: {
       type: String,
       required: true,
     },
-    eventDate: {
+    eventFromDate: {
+      type: Date,
+      required: true,
+    },
+    eventToDate: {
       type: Date,
       required: true,
     },
@@ -31,13 +39,12 @@ const eventBookingSpace = new mongoose.Schema(
     },
     totalAmount: {
       type: Number,
-      required: true,
+      // required: true,
     },
     status: {
       type: String,
-      enum: ["active", "cancelled", "completed"],
-      default: "active",
-      required: true,
+      enum: ["active", "cancelled", "completed", "pending"],
+      default: "pending",
     },
   },
   {
