@@ -15,20 +15,30 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Link from "next/link";
 import Logout from "../Logout";
 import BecomeVendor from "../BecomeVendor";
+import axios from "axios";
 
 const User = () => {
-  // let cookieStore = cookies();
-  // let token, decodedToken;
-  // token = cookieStore.get("token")?.value;
-  // decodedToken = jwt.verify(
-  //   token as string,
-  //   process.env.JWT_SECRET as string
-  // ) as JwtPayload;
-
-  // const name = decodedToken.name;
-  // let firstName = name.split(" ")[0];
-  // let firstLetter = firstName[0];
   const [dropdown, setDropdown] = React.useState(false);
+  const [userRole, setUserRole] = React.useState<any>("");
+  const [userName, setUserName] = React.useState<any>("");
+  const [firstLetterOfFirstName, setFirstLetterOfFirstName] =
+    React.useState<any>("");
+  const [lastLetterOfLastName, setLastLetterOfLastName] =
+    React.useState<any>("");
+
+  const getUserRole = async () => {
+    const response = await axios.get("/api/user");
+    // console.log(response.data.user.role);
+    setUserRole(response.data.user.role);
+    setUserName(response.data.userName);
+    setFirstLetterOfFirstName(response.data.firstLetterOfFirstName);
+    setLastLetterOfLastName(response.data.lastLetterOfLastName);
+    // console.log(response.data.user);
+  };
+
+  React.useEffect(() => {
+    getUserRole();
+  }, []);
 
   const handleIcon = () => {
     setDropdown((prev) => !prev);
@@ -53,14 +63,16 @@ const User = () => {
         <Avatar
           sx={{
             bgcolor: "#ED870F",
-            height: "30px",
-            width: "30px",
+            height: "35px",
+            width: "35px",
             gap: "50px",
+            mr: "5px",
           }}
         >
-          JC
+          {firstLetterOfFirstName}
+          {lastLetterOfLastName}
         </Avatar>
-        <h3>Jiwan</h3>
+        <h3>{userName}</h3>
       </div>
       <div>
         <button
@@ -101,11 +113,11 @@ const User = () => {
                 marginTop: "5px",
                 cursor: "pointer",
               }}
-              href={"/profile"}
+              href={userRole === "vendor" ? "/my-venue" : "/profile"}
             >
               Profile
             </Link>
-            <BecomeVendor />
+            {userRole === "user" && <BecomeVendor />}
           </div>
         )}
       </div>

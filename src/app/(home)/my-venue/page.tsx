@@ -12,7 +12,7 @@ const page = () => {
   const getRole = async () => {
     const response = await axios.get(`/api/user`);
     setUserRole(response.data.user.role);
-    console.log(response.data.user.role);
+    // console.log(response.data.user.role);
   };
 
   React.useEffect(() => {

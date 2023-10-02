@@ -10,7 +10,8 @@ const CurrentBookings = () => {
     setLoading(true);
     const response = await axios.get(`/api/venue/venueDetails`);
     // console.log(response.data.user.name);
-    setBookedBy(response.data.user.name);
+    // setBookedBy(response.data.user);
+    // console.log(response.data.user);
 
     // console.log(response.data.VenueDetails.currentBookings);
     setCurrentBookings(response.data.VenueDetails.currentBookings);
@@ -32,9 +33,9 @@ const CurrentBookings = () => {
 
           {currentBookings.length > 0 ? (
             <>
-              <h4>Booked By: {bookedBy}</h4>
               {currentBookings.map((currentBooking: any) => (
                 <>
+                  <h4>Booked By: {currentBooking.userName}</h4>
                   <p>userId: {currentBooking.userId}</p>
                   <p>event type: {currentBooking.eventType}</p>
                   <p>package: {currentBooking.choosePackage}</p>
@@ -45,6 +46,7 @@ const CurrentBookings = () => {
                     Event Start Date: {currentBooking.formattedFromDateTime}
                   </p>
                   <p>Event End Date: {currentBooking.formattedToDateTime}</p>
+                  <hr style={{ margin: "10px 0" }} />
                 </>
               ))}
             </>

@@ -17,7 +17,7 @@ const page = () => {
   const gerUserRole = async () => {
     try {
       const res = await axios.get("/api/user");
-      // console.log(res.data.user.role);
+      console.log(res.data.user.role);
       setUserRole(res.data.user.role);
     } catch (error) {
       console.log(error);
@@ -26,28 +26,30 @@ const page = () => {
 
   // handleRole
   const handleRole = () => {
-    alert("You do not have access to this page");
     router.push("/my-venue");
   };
 
-  React.useEffect(() => {
-    gerUserRole();
-    handleRole();
-  }, []);
+  // React.useEffect(() => {
+  //   gerUserRole();
+  //   handleRole();
+  // }, []);
 
   return (
     <div>
-      {userRole === "user" ? (
+      <>
+        <FirstSection />
+        <Filter />
+        <SecondSection />
+      </>
+
+      {userRole === "vendor" && (
         <>
-          <FirstSection />
-          <Filter />
-          <SecondSection />
-        </>
-      ) : (
-        <>
-          <button type="submit" onClick={handleRole}>
-            You do not have access to this page
-          </button>
+          <div style={{ color: "#fff", margin: "10px 0" }}>
+            <p>You do not have access to this page</p>
+            <button type="submit" onSubmit={handleRole}>
+              Go to My Venue
+            </button>
+          </div>
         </>
       )}
       {/* 

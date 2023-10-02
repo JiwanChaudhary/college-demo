@@ -72,13 +72,28 @@ export async function GET(request: NextRequest) {
     const userId = decodeToken.id;
 
     // find user on the basis of userId
-    const user = await User.findOne({ _id: userId });
+    const user: any = await User.findOne({ _id: userId });
+
+    // get first name
+    const userName = user.name.split(" ")[0];
+
+    let nameParts = user.name.split(" ");
+    let firstLetterOfFirstName, lastLetterOfLastName;
+
+    if (nameParts.length >= 1) {
+      firstLetterOfFirstName = nameParts[0].charAt(0);
+      lastLetterOfLastName = nameParts[nameParts.length - 1].charAt(0);
+    }
+
     if (user) {
       return NextResponse.json(
         {
           message: "User found",
           success: true,
           user,
+          userName,
+          firstLetterOfFirstName,
+          lastLetterOfLastName,
         },
         {
           status: 200,

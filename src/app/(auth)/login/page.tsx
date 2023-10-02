@@ -33,9 +33,13 @@ const page = () => {
     try {
       e.preventDefault();
       await axios.post("/api/user/login", { user });
+      const response = await axios.get("/api/user");
+      console.log(response.data.user.role);
       setError(false);
       alert("User Logged in successfully!");
-      router.push("/home");
+      response.data.user.role === "user"
+        ? router.push("/home")
+        : router.push("/my-venue");
     } catch (error: any) {
       setError(true);
       setErrorMessage(error.response.data.message);

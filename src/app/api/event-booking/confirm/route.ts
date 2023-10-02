@@ -29,29 +29,16 @@ export async function POST(request: NextRequest) {
     );
 
     const userId = decodeToken.id;
+
+    // find user name
+
+    // const user: any = await User.findOne({ _id: userId });
+
     // console.log(userId);
 
-    // const user = await User.findOne({ _id: userId });
-    // user.currentBookings.push({
-    //   venueName: decodedString,
-    //   eventType,
-    //   choosePackage,
-    //   totalAmount,
-    //   guests,
-    //   message,
-    //   formattedFromDateTime,
-    //   formattedToDateTime,
-    // });
-
-    // venue name
-    const venueName = decodedString;
-    console.log(venueName);
-
-    // find venue from venueName
-    const venue = await Venue.findOne({ venueName });
-    console.log(venue);
-    venue.currentBookings.push({
-      userId,
+    const user = await User.findOne({ _id: userId });
+    user.currentBookings.push({
+      venueName: decodedString,
       eventType,
       choosePackage,
       totalAmount,
@@ -61,9 +48,30 @@ export async function POST(request: NextRequest) {
       formattedToDateTime,
     });
 
-    // await user.save();
+    const userName = user.name;
+
+    // venue name
+    const venueName = decodedString;
+    // console.log(venueName);
+
+    // find venue from venueName
+    const venue = await Venue.findOne({ venueName });
+    // console.log(venue);
+    venue.currentBookings.push({
+      userId,
+      userName,
+      eventType,
+      choosePackage,
+      totalAmount,
+      guests,
+      message,
+      formattedFromDateTime,
+      formattedToDateTime,
+    });
+
+    await user.save();
     await venue.save();
-    console.log(venue);
+    // console.log(venue);
 
     return NextResponse.json(
       {

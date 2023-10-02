@@ -82,17 +82,16 @@ export async function GET(request: NextRequest) {
     const VenueDetails = await Venue.findOne({ userId: id });
 
     // userId of current bookings
-    let userId;
+    // let userId: any = [];
 
-    if (VenueDetails.currentBookings.length > 0) {
-      VenueDetails.currentBookings.forEach((booking: any) => {
-        // console.log(booking.userId);
-        userId = booking.userId;
-      });
-    }
+    // if (VenueDetails.currentBookings.length > 0) {
+    //   VenueDetails.currentBookings.map((booking: any) => {
+    //     userId = [...userId, booking.userId];
+    //   });
+    // }
 
     // find user details on the basis of userId
-    const user = await User.findOne({ _id: userId });
+    // const user: any = await User.find({ _id: userId });
 
     // if venue details found
     if (VenueDetails) {
@@ -101,7 +100,6 @@ export async function GET(request: NextRequest) {
           message: "Venue Found",
           success: true,
           VenueDetails,
-          user,
         },
         {
           status: 200,

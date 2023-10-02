@@ -18,12 +18,12 @@ const page = () => {
   const [error, setError] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState("");
 
-  const [role, setRole] = React.useState("user");
+  // const [role, setRole] = React.useState("user");
 
   // functions
-  const handleRoleChange = (e: SelectChangeEvent) => {
-    setRole(e.target.value as string);
-  };
+  // const handleRoleChange = (e: SelectChangeEvent) => {
+  //   setRole(e.target.value as string);
+  // };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let { name, value } = e.target;
@@ -39,7 +39,7 @@ const page = () => {
     try {
       e.preventDefault();
       setError(false);
-      await axios.post("/api/user/register", { user, role });
+      await axios.post("/api/user/register", { user });
       alert("User Registered Successfully!");
       router.push("/login");
     } catch (error: any) {
@@ -97,12 +97,12 @@ const page = () => {
             />
           </FormControl>
           {/* Role */}
-          <FormControl>
+          {/* <FormControl>
             <Select value={role} label="User" onChange={handleRoleChange}>
               <MenuItem value="user">user</MenuItem>
               <MenuItem value="vendor">vendor</MenuItem>
             </Select>
-          </FormControl>
+          </FormControl> */}
           {error && <small>{errorMessage}</small>}
           <RegisterButton
             onClick={handleSubmit}
