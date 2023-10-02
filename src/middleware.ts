@@ -19,5 +19,12 @@ export function middleware(request: NextRequest) {
 
 // pathname
 export const config = {
-  matcher: ["/login", "/signup", "/home"],
+  matcher: [
+    "/login",
+    "/signup",
+    "/home/:path*",
+    "/event",
+    "/venue/:path*",
+    "/my-venue",
+  ],
 };

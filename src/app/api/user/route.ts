@@ -26,8 +26,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // send mail if the user found
-    await sendMail({ email, emailType: "RESET", userId: user._id });
+    // send mail if the user found and not registered
+    if (!user.isVerified) {
+      await sendMail({ email, emailType: "RESET", userId: user._id });
+    }
 
     return NextResponse.json(
       {

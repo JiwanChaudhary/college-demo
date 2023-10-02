@@ -2,6 +2,7 @@ import connectDB from "@/db/connext";
 import Venue from "@/models/venueSpace";
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
+import User from "@/models/userSchema";
 
 // provide venue details
 export async function POST(request: NextRequest) {
@@ -75,6 +76,19 @@ export async function GET(request: NextRequest) {
 
     const VenueDetails = await Venue.findOne({ userId: id });
 
+    // userId of current bookings
+    let userId;
+
+    if (VenueDetails.currentBookings.length > 0) {
+      VenueDetails.currentBookings.forEach((booking: any) => {
+        // console.log(booking.userId);
+        userId = booking.userId;
+      });
+    }
+
+    // find user details on the basis of userId
+    const user = await User.findOne({ _id: userId });
+
     // if venue details found
     if (VenueDetails) {
       return NextResponse.json(
@@ -82,6 +96,7 @@ export async function GET(request: NextRequest) {
           message: "Venue Found",
           success: true,
           VenueDetails,
+          user,
         },
         {
           status: 200,
