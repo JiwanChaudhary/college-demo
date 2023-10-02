@@ -10,6 +10,11 @@ import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import VenueBookingForm from "@/venue/venue-booking-form/VenueBookingForm";
 
@@ -22,6 +27,7 @@ const page = ({ params }: any) => {
   const [image, setImage] = React.useState([]);
   const [phone, setPhone] = React.useState([]);
   const [venue, setVenue] = React.useState<any>();
+  const [availablePackages, setAvailablePackages] = React.useState<any>([]);
   const maxSteps = image.length;
 
   const handleNext = () => {
@@ -36,6 +42,7 @@ const page = ({ params }: any) => {
     setActiveStep(step);
   };
 
+  // get single venue
   const singleVenue = async () => {
     const response = await axios.get(`/api/venue/${venueName}`);
     setImage(response.data.venue.imageUrls);
@@ -43,8 +50,16 @@ const page = ({ params }: any) => {
     setPhone(response.data.venue.phone);
   };
 
+  // get venue Packages
+  const venuePackages = async () => {
+    const response = await axios.get(`/api/package/${venueName}`);
+    console.log(response.data.venuePackages);
+    setAvailablePackages(response.data.venuePackages);
+  };
+
   React.useEffect(() => {
     singleVenue();
+    venuePackages();
   }, []);
 
   return (
@@ -124,7 +139,52 @@ const page = ({ params }: any) => {
             <p>Description:</p>
             <p>{venue?.description}</p>
             {/* packages */}
-            <div>FAQ here</div>
+            <h2>Available Packages</h2>
+            {availablePackages.map((venuePackage: any) => (
+              <div>
+                <Accordion sx={{ mb: 1 }}>
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                    <Typography>{venuePackage.name}</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails sx={{ mb: 1 }}>
+                    {/* package description */}
+                    <div style={{ display: "flex" }}>
+                      <p>Package Description: </p>
+                      <p>{venuePackage.description}</p>
+                    </div>
+                    {/* package basePrice */}
+                    <div style={{ display: "flex" }}>
+                      <p>Base Price: </p>
+                      <p>{venuePackage.basePrice}</p>
+                    </div>
+                    {/* numberOfPeopleForBasePrice */}
+                    <div style={{ display: "flex" }}>
+                      <p>Number of people for base price: </p>
+                      <p>{venuePackage.numberOfPeopleForBasePrice}</p>
+                    </div>
+                    {/* capacity */}
+                    <div style={{ display: "flex" }}>
+                      <p>Capacity: </p>
+                      <p>{venuePackage.capacity}</p>
+                    </div>
+                    {/* additionalPricePerPerson */}
+                    <div style={{ display: "flex" }}>
+                      <p>Additional Price Per Person: </p>
+                      <p>{venuePackage.additionalPricePerPerson}</p>
+                    </div>
+                    {/* servicesIncluded */}
+                    <div style={{ display: "flex" }}>
+                      <p>Services Included: </p>
+                      <p>{venuePackage.servicesIncluded}</p>
+                    </div>
+                  </AccordionDetails>
+                </Accordion>
+              </div>
+            ))}
             {/* Venue Information here */}
             <div>
               <p>location: {venue?.address}</p>

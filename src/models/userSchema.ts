@@ -32,6 +32,10 @@ const UserSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    currentBookings: {
+      type: Array,
+      default: [],
+    },
     verifyToken: String,
     verifyTokenExpiry: Date,
     forgotPasswordToken: String,

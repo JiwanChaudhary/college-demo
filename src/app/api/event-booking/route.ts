@@ -10,6 +10,7 @@ let createEventBooking: any;
 
 export async function POST(request: NextRequest) {
   await connectDB();
+  let totalAmount: number = 0;
 
   try {
     const {
@@ -95,19 +96,50 @@ export async function POST(request: NextRequest) {
 
     // find packageId from choosePackage and venueId
     const findPackage = await Package.findOne({ name: choosePackage, venueId });
-    console.log(findPackage.name);
+    // console.log(findPackage.name);
 
     const basePriceForPackage = findPackage.basePrice;
-    console.log(basePriceForPackage);
+    // console.log(basePriceForPackage);
 
     const numberOfPeopleForBasePrice = findPackage.numberOfPeopleForBasePrice;
     const capacityForPackage = findPackage.capacity;
     const additionalPricePerPerson = findPackage.additionalPricePerPerson;
-    const guestsForEvent = guests;
+    const guestsForEvent = Number(guests);
+    // console.log(typeof guestsForEvent);
+    // console.log(typeof numberOfPeopleForBasePrice);
+    // console.log(typeof capacityForPackage);
+    // console.log(typeof additionalPricePerPerson);
+    // console.log(typeof basePriceForPackage);
+    // console.log(typeof rentalFee);
+    // console.log(typeof totalDays);
 
     // calculate total amount for event
-    let totalAmount = 0;
-    if (guestsForEvent > capacityForPackage) {
+
+    // totalAmount = rentalFee * totalDays;
+
+    // if (guestsForEvent > numberOfPeopleForBasePrice) {
+    //   totalAmount =
+    //     rentalFee * totalDays +
+    //     basePriceForPackage * totalDays +
+    //     (guestsForEvent - numberOfPeopleForBasePrice) *
+    //       additionalPricePerPerson *
+    //       totalDays;
+    // } else
+    // console.log(guestsForEvent, numberOfPeopleForBasePrice);
+
+    if (guestsForEvent === numberOfPeopleForBasePrice) {
+      totalAmount = rentalFee * totalDays + basePriceForPackage * totalDays;
+    } else if (
+      guestsForEvent > numberOfPeopleForBasePrice &&
+      guestsForEvent <= capacityForPackage
+    ) {
+      totalAmount =
+        rentalFee * totalDays +
+        basePriceForPackage * totalDays +
+        (guestsForEvent - numberOfPeopleForBasePrice) *
+          additionalPricePerPerson *
+          totalDays;
+    } else {
       return NextResponse.json(
         {
           message: "Guests cannot be more than capacity of the package",
@@ -117,20 +149,12 @@ export async function POST(request: NextRequest) {
           status: 400,
         }
       );
-    } else if (guestsForEvent === numberOfPeopleForBasePrice) {
-      totalAmount = rentalFee * totalDays + basePriceForPackage * totalDays;
-    } else if (guestsForEvent > numberOfPeopleForBasePrice) {
-      totalAmount =
-        rentalFee * totalDays +
-        basePriceForPackage * totalDays +
-        (guestsForEvent - numberOfPeopleForBasePrice) *
-          additionalPricePerPerson *
-          totalDays;
     }
+
     console.log(totalAmount);
 
     const packageId = findPackage._id; // get packageId
-    console.log(packageId);
+    // console.log(packageId);
 
     // create event booking
     const BookEvent = await Event.create({
@@ -140,13 +164,13 @@ export async function POST(request: NextRequest) {
       eventType,
       eventFromDate: startDateObject,
       eventToDate: endDateObject,
-      totalAttendees: guests,
+      totalAttendees: guestsForEvent,
       totalAmount,
       status: "active",
       message,
     });
 
-    createEventBooking = BookEvent;
+    createEventBooking = BookEvent._id;
 
     if (BookEvent) {
       return NextResponse.json(
@@ -190,7 +214,7 @@ export async function GET(request: NextRequest) {
   await connectDB();
 
   try {
-    // console.log(createEventBooking._id);
+    // console.log(createEventBooking);
 
     // get token from cookies
     const token: any = await request.cookies.get("token")?.value;
@@ -201,12 +225,13 @@ export async function GET(request: NextRequest) {
     );
 
     const userId = decodeToken.id;
+    // console.log(userId);
 
     // find event on the basis of userId
     const event = await Event.findOne({ userId, _id: createEventBooking._id })
       .populate("packageId")
       .populate("venueId");
-    console.log(event);
+    // console.log(event);
 
     if (event) {
       return NextResponse.json(

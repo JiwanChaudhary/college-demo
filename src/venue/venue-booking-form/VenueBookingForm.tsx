@@ -25,8 +25,8 @@ const VenueBookingForm = ({ venueName }: any) => {
   const [formattedToDateTime, setFormattedToDateTime] = React.useState<any>();
 
   const [open, setOpen] = React.useState(true);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  // const handleOpen = () => setOpen(true);
+  // const handleClose = () => setOpen(false);
 
   const style = {
     position: "absolute" as "absolute",
@@ -134,6 +134,27 @@ const VenueBookingForm = ({ venueName }: any) => {
     }
   }
 
+  // handle confirm booking
+  async function handleConfirmBooking(e: any) {
+    e.preventDefault();
+    try {
+      await axios.post(`/api/event-booking/confirm`, {
+        formattedFromDateTime,
+        formattedToDateTime,
+        eventDetails,
+        eventType,
+        choosePackage,
+        totalAmount,
+        decodedString,
+      });
+      alert("success");
+      setShowModal(false);
+    } catch (error) {
+      setShowModal(false);
+      console.log(error);
+    }
+  }
+
   return (
     <>
       <form onSubmit={handleFormSubmit}>
@@ -214,7 +235,7 @@ const VenueBookingForm = ({ venueName }: any) => {
       {showModal && (
         <Modal
           open={open}
-          onClose={handleClose}
+          // onClose={handleClose}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
@@ -223,7 +244,7 @@ const VenueBookingForm = ({ venueName }: any) => {
               Confirm Booking
             </Typography>
             <Box id="modal-modal-description" sx={{ mt: 2 }}>
-              <form>
+              <form onSubmit={handleConfirmBooking}>
                 {/* user name */}
                 <div>
                   <label>Booked By:</label>
@@ -259,6 +280,11 @@ const VenueBookingForm = ({ venueName }: any) => {
                   <label>Total Attendees:</label>
                   <input type="text" readOnly value={eventDetails.guests} />
                 </div>
+                {/*  */}
+                <div>
+                  <label>Message:</label>
+                  <input type="text" readOnly value={eventDetails.message} />
+                </div>
                 {/* total amount */}
                 <div>
                   <label>Total Amount:</label>
@@ -266,7 +292,7 @@ const VenueBookingForm = ({ venueName }: any) => {
                 </div>
                 {/* submit and cancel button */}
                 <div>
-                  <button type="submit">Cancel</button>
+                  <button type="button">Cancel</button>
                   <button type="submit">Submit</button>
                 </div>
               </form>
