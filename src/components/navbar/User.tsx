@@ -14,6 +14,7 @@ import {
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Link from "next/link";
 import Logout from "../Logout";
+import BecomeVendor from "../BecomeVendor";
 
 const User = () => {
   // let cookieStore = cookies();
@@ -104,6 +105,7 @@ const User = () => {
             >
               Profile
             </Link>
+            <BecomeVendor />
           </div>
         )}
       </div>

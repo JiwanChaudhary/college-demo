@@ -22,6 +22,11 @@ export async function POST(request: NextRequest) {
       process.env.JWT_SECRET as string
     );
 
+    // update role to vendor
+    const user = await User.findOne({ _id: decodeToken.id });
+    user.role = "vendor";
+    await user.save();
+
     const updateVenue = await Venue.create({
       userId: decodeToken.id,
       venueName,

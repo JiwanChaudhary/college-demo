@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import * as React from "react";
 
 const VendorDetailsForm = () => {
-
   const router = useRouter();
 
   const [vendorDetails, setVendorDetails] = React.useState<any>({
@@ -46,7 +45,6 @@ const VendorDetailsForm = () => {
       });
       alert("Data successfulyy sent");
       router.refresh();
-      
     } catch (error) {
       console.log(error);
     }
@@ -54,6 +52,8 @@ const VendorDetailsForm = () => {
 
   return (
     <div>
+      {/* Become Vendor */}
+      <h1>Become Vendor</h1>
       <form onSubmit={handleFormSubmit}>
         {/* venue Name */}
         <div>
