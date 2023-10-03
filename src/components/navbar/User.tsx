@@ -16,6 +16,7 @@ import Link from "next/link";
 import Logout from "../Logout";
 import BecomeVendor from "../BecomeVendor";
 import axios from "axios";
+import MyVenue from "../MyVenue";
 
 const User = () => {
   const [dropdown, setDropdown] = React.useState(false);
@@ -113,11 +114,12 @@ const User = () => {
                 marginTop: "5px",
                 cursor: "pointer",
               }}
-              href={userRole === "vendor" ? "/my-venue" : "/profile"}
+              href={"/user-profile"}
             >
               Profile
             </Link>
             {userRole === "user" && <BecomeVendor />}
+            {userRole === "vendor" && <MyVenue />}
           </div>
         )}
       </div>

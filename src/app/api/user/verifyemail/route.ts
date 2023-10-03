@@ -6,7 +6,7 @@ export async function POST(request: NextRequest) {
   await connectDB();
   try {
     const { token } = await request.json();
-    console.log(token);
+    // console.log(token);
 
     // find user on the basis of token
     const user = await User.findOne({ verifyToken: token });

@@ -26,10 +26,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // send mail if the user found and not registered
-    if (!user.isVerified) {
-      await sendMail({ email, emailType: "RESET", userId: user._id });
-    }
+    // send mail for forgot password
+
+    await sendMail({ email, emailType: "RESET", userId: user._id });
 
     return NextResponse.json(
       {
@@ -72,7 +71,7 @@ export async function GET(request: NextRequest) {
     const userId = decodeToken.id;
 
     // find user on the basis of userId
-    const user: any = await User.findOne({ _id: userId });
+    const user: any = await User.findOne({ _id: userId }).select("-password");
 
     // get first name
     const userName = user.name.split(" ")[0];

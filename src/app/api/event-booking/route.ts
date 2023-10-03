@@ -227,11 +227,15 @@ export async function GET(request: NextRequest) {
     const userId = decodeToken.id;
     // console.log(userId);
 
-    // find event on the basis of userId
+    // find event on the basis of userId and eventId
     const event = await Event.findOne({ userId, _id: createEventBooking._id })
       .populate("packageId")
       .populate("venueId");
     // console.log(event);
+
+    // find event on the basis of userId
+    // const userEvent = await Event.find({ userId });
+    // console.log(userEvent);
 
     if (event) {
       return NextResponse.json(

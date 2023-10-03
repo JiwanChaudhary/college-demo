@@ -66,8 +66,10 @@ export async function POST(request: NextRequest) {
       expiresIn: "1d",
     });
 
-    // send mail verification email
-    await sendMail({ email, emailType: "VERIFY", userId: findUser._id });
+    // send mail verification email if user not verified
+    if (findUser.isVerified === false) {
+      await sendMail({ email, emailType: "VERIFY", userId: findUser._id });
+    }
 
     // if user credentials match, return user
     const response = await NextResponse.json(

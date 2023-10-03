@@ -32,31 +32,113 @@ const MyPackage = () => {
         <>loading...</>
       ) : (
         <>
-          <div>
-            <h2>The packages are:</h2>
-            <div>
-              {venuePackages.map((venuePackage: any) => (
-                <>
-                  <h4>Package Name: {venuePackage.name}</h4>
-                  <p>Description: {venuePackage.description}</p>
-                  <p>Base Price for Package: Rs.{venuePackage.basePrice}</p>
-                  <p>
-                    Number of people for base price:{" "}
-                    {venuePackage.numberOfPeopleForBasePrice}
-                  </p>
-                  <p>
-                    Additional price per person: Rs.
-                    {venuePackage.additionalPricePerPerson}
-                  </p>
-                  <p>Capacity for the package: {venuePackage.capacity}</p>
-                  <p>
-                    Services Included for the package:{" "}
-                    {venuePackage.servicesIncluded}
-                  </p>
-                  <hr style={{ margin: "10px 0" }} />
-                </>
-              ))}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              width: "100%",
+              padding: "0 20px",
+            }}
+          >
+            {/* my-package and create new package */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                flexDirection: "row",
+                justifyContent: "space-around",
+                width: "100%",
+              }}
+            >
+              <h2>My Packages:</h2>
+              <button
+                type="submit"
+                style={{ padding: "5px 8px", cursor: "pointer" }}
+              >
+                Create New Package
+              </button>
             </div>
+            <hr
+              style={{
+                margin: "5px 0",
+                background: "#fff",
+                height: "2px",
+                color: "#fff",
+                width: "100%",
+              }}
+            />
+            {venuePackages.length ? (
+              <div>
+                {venuePackages.map((venuePackage: any) => (
+                  <>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      {/* package */}
+                      <div>
+                        <h4>Package Name: {venuePackage.name}</h4>
+                        <p>Description: {venuePackage.description}</p>
+                        <p>
+                          Base Price for Package: Rs.{venuePackage.basePrice}
+                        </p>
+                        <p>
+                          Number of people for base price:{" "}
+                          {venuePackage.numberOfPeopleForBasePrice}
+                        </p>
+                        <p>
+                          Additional price per person: Rs.
+                          {venuePackage.additionalPricePerPerson}
+                        </p>
+                        <p>Capacity for the package: {venuePackage.capacity}</p>
+                        <p>
+                          Services Included for the package:{" "}
+                          {venuePackage.servicesIncluded}
+                        </p>
+                      </div>
+                      {/* update package */}
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <button
+                          type="submit"
+                          style={{
+                            padding: "5px 8px",
+                            cursor: "pointer",
+                            marginRight: "10px",
+                            height: "30px",
+                          }}
+                        >
+                          Update
+                        </button>
+                        <button
+                          type="submit"
+                          style={{
+                            padding: "5px 8px",
+                            cursor: "pointer",
+                            height: "30px",
+                          }}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                    <hr style={{ margin: "10px 0" }} />
+                  </>
+                ))}
+              </div>
+            ) : (
+              <div>
+                <h4>No packages yet</h4>
+              </div>
+            )}
           </div>
         </>
       )}
