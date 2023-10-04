@@ -2,16 +2,55 @@
 
 import axios from "axios";
 import * as React from "react";
+import dayjs from "dayjs";
 
 const UserProfile = () => {
   const [userDetails, setUserDetails] = React.useState<any>({});
+  const [profile, setProfile] = React.useState<any>(true); // user profile
+  const [userBookings, setUserBookings] = React.useState<any>(false); // user bookings
+  const [bookings, setBookings] = React.useState<any>([]);
+  const [packageId, setPackageId] = React.useState<any>("");
+  const [currentBookings, setCurrentBookings] = React.useState<any>([]);
+
+  // table head
+  const tableHead = [
+    {
+      id: 1,
+      value: "Venue Name",
+    },
+    {
+      id: 2,
+      value: "Package Name",
+    },
+    {
+      id: 3,
+      value: "From Date",
+    },
+    {
+      id: 4,
+      value: "To Date",
+    },
+    {
+      id: 5,
+      value: "Total Amount",
+    },
+    {
+      id: 6,
+      value: "Total Attendee",
+    },
+    {
+      id: 8,
+      value: "Action",
+    },
+  ];
 
   //   get user bookings
   const getUserBookings = async () => {
     try {
       const response = await axios.get(`/api/event-booking/get-user-booking`);
-      console.log(response.data.event);
+      // console.log(response.data.event);
       //   yaha data aaucha
+      setBookings(response.data.event);
     } catch (error) {
       console.log(error);
     }
@@ -23,6 +62,8 @@ const UserProfile = () => {
       const response = await axios.get(`/api/user`);
       // console.log(response.data.user);
       setUserDetails(response.data.user);
+      setCurrentBookings(response.data.user.currentBookings);
+      console.log(response.data.user.currentBookings);
     } catch (error) {
       console.log(error);
     }
@@ -31,16 +72,29 @@ const UserProfile = () => {
   React.useEffect(() => {
     getUserDetails();
     getUserBookings();
-  }, []);
+  }, [profile, userBookings]);
 
   //   handle user verification
   const handleUserVerify = () => {
     alert("Please check your mail for verification link");
   };
 
+  // handle Pay
+  // const handlePayNow = (e: any) => {
+  //   // console.log(e.target.value);
+  //   const fromDateTime = e.target.value;
+  //   console.log(fromDateTime);
+  //   alert(`${fromDateTime} is your booking date and time}`);
+  // };
+
   return (
     <div
-      style={{ display: "flex", flexDirection: "column", padding: "10px 60px" }}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        padding: "10px 60px",
+        height: "100vh",
+      }}
     >
       <div
         style={{
@@ -49,7 +103,14 @@ const UserProfile = () => {
           width: "100%",
         }}
       >
-        <button type="button" style={{ padding: "5px 8px", cursor: "pointer" }}>
+        <button
+          type="button"
+          style={{ padding: "5px 8px", cursor: "pointer" }}
+          onClick={() => {
+            setProfile(true);
+            setUserBookings(false);
+          }}
+        >
           Profile
         </button>
         {userDetails.role === "vendor" ? null : (
@@ -57,85 +118,218 @@ const UserProfile = () => {
             <button
               type="button"
               style={{ padding: "5px 8px", cursor: "pointer" }}
+              onClick={() => {
+                setProfile(false);
+                setUserBookings(true);
+              }}
             >
               Bookings
             </button>
           </>
         )}
       </div>
+      <hr style={{ color: "#000", width: "100%", margin: "10px auto" }} />
       <div style={{ display: "flex", justifyContent: "space-around" }}>
         {/* user details */}
-        <div>
-          {/* name */}
-          <p>
-            <span style={{ fontWeight: "bold" }}>Name:</span> {userDetails.name}
-          </p>
-          {/* email */}
-          <p>
-            <span style={{ fontWeight: "bold" }}>Email:</span>{" "}
-            {userDetails.email}
-          </p>
-          {/* role */}
-          <p>
-            <span style={{ fontWeight: "bold" }}>Role:</span> {userDetails.role}
-          </p>
-          {/* isVerified */}
-          <p>
-            {userDetails.isVerified ? (
-              <>
-                <p
-                  style={{
-                    border: "1px solid green",
-                    background: "green",
-                    color: "#fff",
-                    marginTop: "10px",
-                    marginBottom: "10px",
-                  }}
-                >
-                  User Verified
-                </p>
-              </>
-            ) : (
-              <>
-                <p
-                  style={{
-                    border: "1px solid red",
-                    background: "red",
-                    color: "#fff",
-                  }}
-                >
-                  Please verify your account
-                </p>
-              </>
-            )}
-          </p>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            {userDetails.isVerified ? null : (
-              <>
-                <button
-                  type="submit"
-                  style={{ marginTop: "10px", marginBottom: "10px" }}
-                  onClick={handleUserVerify}
-                >
-                  Verify Account Now
-                </button>
-              </>
-            )}
-            {/* update profile */}
-            <button
-              type="submit"
-              style={{ padding: "5px 8px", cursor: "pointer" }}
-            >
-              Update your profile
-            </button>
-          </div>
-        </div>
-        {/* user bookings */}
-        {userDetails.role === "vendor" ? null : (
-          <>
-            <div>
-              <p>no current bookings</p>
+        {profile && (
+          <div>
+            {/* name */}
+            <p>
+              <span style={{ fontWeight: "bold" }}>Name:</span>{" "}
+              {userDetails.name}
+            </p>
+            {/* email */}
+            <p>
+              <span style={{ fontWeight: "bold" }}>Email:</span>{" "}
+              {userDetails.email}
+            </p>
+            {/* role */}
+            <p>
+              <span style={{ fontWeight: "bold" }}>Role:</span>{" "}
+              {userDetails.role}
+            </p>
+            {/* isVerified */}
+            <p>
+              {userDetails.isVerified ? (
+                <>
+                  <p
+                    style={{
+                      border: "1px solid green",
+                      background: "green",
+                      color: "#fff",
+                      marginTop: "10px",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    User Verified
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p
+                    style={{
+                      border: "1px solid red",
+                      background: "red",
+                      color: "#fff",
+                    }}
+                  >
+                    Please verify your account
+                  </p>
+                </>
+              )}
+            </p>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              {userDetails.isVerified ? null : (
+                <>
+                  <button
+                    type="submit"
+                    style={{ marginTop: "10px", marginBottom: "10px" }}
+                    onClick={handleUserVerify}
+                  >
+                    Verify Account Now
+                  </button>
+                </>
+              )}
+              {/* update profile */}
+              <button
+                type="submit"
+                style={{ padding: "5px 8px", cursor: "pointer" }}
+              >
+                Update your profile
+              </button>
             </div>
+          </div>
+        )}
+        {/* user bookings */}
+        {userBookings && (
+          <>
+            {userDetails.role === "vendor" ? null : (
+              <>
+                <table
+                  style={{
+                    borderCollapse: "collapse",
+                    border: "1px solid red",
+                  }}
+                >
+                  {/* head */}
+                  <tr style={{ border: "1px solid red" }}>
+                    {tableHead.map((th) => (
+                      <>
+                        <th
+                          key={th.id}
+                          style={{
+                            border: "1px solid red",
+                            textAlign: "center",
+                            padding: "2px",
+                          }}
+                        >
+                          {th.value}
+                        </th>
+                      </>
+                    ))}
+                  </tr>
+                  {/* body */}
+                  {currentBookings.map((booking: any) => (
+                    <>
+                      <tr style={{ border: "1px solid red" }} key={booking._id}>
+                        <td
+                          style={{
+                            border: "1px solid red",
+                            textAlign: "center",
+                            padding: "2px",
+                          }}
+                        >
+                          {booking.venueName}
+                        </td>
+                        <td
+                          style={{
+                            border: "1px solid red",
+                            textAlign: "center",
+                            padding: "2px",
+                          }}
+                        >
+                          {booking.choosePackage}
+                        </td>
+                        <td
+                          style={{
+                            border: "1px solid red",
+                            textAlign: "center",
+                            padding: "2px",
+                          }}
+                        >
+                          {booking.formattedFromDateTime}
+                        </td>
+                        <td
+                          style={{
+                            border: "1px solid red",
+                            textAlign: "center",
+                            padding: "2px",
+                          }}
+                        >
+                          {booking.formattedToDateTime}
+                        </td>
+                        <td
+                          style={{
+                            border: "1px solid red",
+                            textAlign: "center",
+                            padding: "2px",
+                          }}
+                        >
+                          {booking.totalAmount}
+                        </td>
+                        <td
+                          style={{
+                            border: "1px solid red",
+                            textAlign: "center",
+                            padding: "2px",
+                          }}
+                        >
+                          {booking.guests}
+                        </td>
+                        <td
+                          style={{
+                            border: "1px solid red",
+                            textAlign: "center",
+                            padding: "2px",
+                            display: "flex",
+                            flexDirection: "column",
+                          }}
+                        >
+                          <button
+                            type="button"
+                            style={{
+                              marginBottom: "2px",
+                              cursor: "pointer",
+                              background: "red",
+                              border: "none",
+                              borderRadius: "4px",
+                              padding: "4px",
+                            }}
+                          >
+                            Cancel
+                          </button>
+                          {/* <button
+                            type="submit"
+                            style={{
+                              cursor: "pointer",
+                              background: "green",
+                              border: "none",
+                              borderRadius: "4px",
+                              padding: "4px",
+                            }}
+                            onClick={handlePayNow}
+                            value={booking.formattedFromDateTime}
+                          >
+                            Pay Now
+                          </button> */}
+                        </td>
+                      </tr>
+                    </>
+                  ))}
+                  <tr></tr>
+                </table>
+              </>
+            )}
           </>
         )}
       </div>

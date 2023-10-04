@@ -99,7 +99,7 @@ const User = () => {
               top: "8% !important",
               right: "10px",
               borderRadius: "5px",
-              zIndex: "1000",
+              zIndex: "1000 !important",
             }}
           >
             <Logout />

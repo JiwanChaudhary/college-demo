@@ -1,9 +1,11 @@
 "use client";
 
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import * as React from "react";
 
 const MyPackage = () => {
+  const router = useRouter();
   const [venuePackages, setVenuePackages] = React.useState<any>([]);
   const [loading, setLoading] = React.useState(false);
   // get package details
@@ -25,6 +27,11 @@ const MyPackage = () => {
   React.useEffect(() => {
     getPackageDetails();
   }, []);
+
+  // create new package
+  const handleCreateNewPackage = () => {
+    router.push("/venue/package");
+  };
 
   return (
     <>
@@ -56,6 +63,7 @@ const MyPackage = () => {
               <button
                 type="submit"
                 style={{ padding: "5px 8px", cursor: "pointer" }}
+                onClick={handleCreateNewPackage}
               >
                 Create New Package
               </button>

@@ -53,7 +53,7 @@ const page = ({ params }: any) => {
   // get venue Packages
   const venuePackages = async () => {
     const response = await axios.get(`/api/package/${venueName}`);
-    console.log(response.data.venuePackages);
+    // console.log(response.data.venuePackages);
     setAvailablePackages(response.data.venuePackages);
   };
 
@@ -185,6 +185,7 @@ const page = ({ params }: any) => {
                 </Accordion>
               </div>
             ))}
+            {availablePackages.length === 0 && (<><p>No packages</p></>)}
             {/* Venue Information here */}
             <div>
               <p>location: {venue?.address}</p>

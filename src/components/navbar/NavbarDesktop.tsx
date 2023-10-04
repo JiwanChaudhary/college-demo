@@ -27,6 +27,10 @@ const NavbarDesktop = () => {
         position: "sticky",
         top: 0,
         zIndex: 100,
+        // overflow: "hidden",
+        // width: "100%",
+        // marginBottom: "600px",
+
       }}
     >
       <div
@@ -52,7 +56,12 @@ const NavbarDesktop = () => {
             textAlign: "center",
           }}
         >
-          <input type="text" id="location" placeholder="search venue" style={{padding: "8px"}} />
+          <input
+            type="text"
+            id="location"
+            placeholder="search venue"
+            style={{ padding: "8px" }}
+          />
         </div>
         <div>
           {navElements.map((navElement) => (

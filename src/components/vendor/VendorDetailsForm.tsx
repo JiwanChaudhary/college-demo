@@ -148,7 +148,9 @@ const VendorDetailsForm = () => {
         </div>
         {/* tags */}
         <div>
-          <label htmlFor="tags">tags</label>
+          <label htmlFor="tags">
+            Types of event. Separate the event type by comma
+          </label>
           <input
             multiple
             type="text"

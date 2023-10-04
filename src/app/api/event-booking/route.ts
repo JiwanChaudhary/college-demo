@@ -89,6 +89,8 @@ export async function POST(request: NextRequest) {
     // console.log(decodedString);
 
     const venue = await Venue.findOne({ venueName: decodedString });
+    console.log(venue);
+
     const rentalFee = venue.rentalFee;
 
     const venueId = venue._id; //get venueId
@@ -105,27 +107,8 @@ export async function POST(request: NextRequest) {
     const capacityForPackage = findPackage.capacity;
     const additionalPricePerPerson = findPackage.additionalPricePerPerson;
     const guestsForEvent = Number(guests);
-    // console.log(typeof guestsForEvent);
-    // console.log(typeof numberOfPeopleForBasePrice);
-    // console.log(typeof capacityForPackage);
-    // console.log(typeof additionalPricePerPerson);
-    // console.log(typeof basePriceForPackage);
-    // console.log(typeof rentalFee);
-    // console.log(typeof totalDays);
 
     // calculate total amount for event
-
-    // totalAmount = rentalFee * totalDays;
-
-    // if (guestsForEvent > numberOfPeopleForBasePrice) {
-    //   totalAmount =
-    //     rentalFee * totalDays +
-    //     basePriceForPackage * totalDays +
-    //     (guestsForEvent - numberOfPeopleForBasePrice) *
-    //       additionalPricePerPerson *
-    //       totalDays;
-    // } else
-    // console.log(guestsForEvent, numberOfPeopleForBasePrice);
 
     if (guestsForEvent === numberOfPeopleForBasePrice) {
       totalAmount = rentalFee * totalDays + basePriceForPackage * totalDays;
@@ -139,6 +122,9 @@ export async function POST(request: NextRequest) {
         (guestsForEvent - numberOfPeopleForBasePrice) *
           additionalPricePerPerson *
           totalDays;
+    } else if (guestsForEvent < numberOfPeopleForBasePrice) {
+      totalAmount =
+        rentalFee * totalDays + additionalPricePerPerson * totalDays;
     } else {
       return NextResponse.json(
         {
@@ -209,7 +195,7 @@ export async function POST(request: NextRequest) {
 
 // console.log(createEventBooking);
 
-// get total amount for event
+//! get total amount for event
 export async function GET(request: NextRequest) {
   await connectDB();
 
@@ -228,9 +214,7 @@ export async function GET(request: NextRequest) {
     // console.log(userId);
 
     // find event on the basis of userId and eventId
-    const event = await Event.findOne({ userId, _id: createEventBooking._id })
-      .populate("packageId")
-      .populate("venueId");
+    const event = await Event.findOne({ userId, _id: createEventBooking._id });
     // console.log(event);
 
     // find event on the basis of userId

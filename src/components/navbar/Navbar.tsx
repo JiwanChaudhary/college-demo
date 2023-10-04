@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import * as React from "react";
 // import jwt, { JwtPayload } from "jsonwebtoken";
@@ -24,7 +24,11 @@ const Navbar = () => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("md"));
 
-  return <div style={{margin: 0}}>{matches ? <NavbarMobile /> : <NavbarDesktop />}</div>;
+  return (
+    <div style={{ margin: 0, position: "sticky", top: 0, }}>
+      {matches ? <NavbarMobile /> : <NavbarDesktop />}
+    </div>
+  );
 };
 
 export default Navbar;

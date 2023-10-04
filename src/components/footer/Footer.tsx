@@ -9,18 +9,24 @@ import styles from "@/components/navbar/NavbarDesktop.module.css";
 // nav elements
 const navElements = [
   { id: "home", value: "HOME" },
-  { id: "event", value: "EVENT" },
-  { id: "venue", value: "VENUE" },
   { id: "contact", value: "CONTACT" },
   { id: "about", value: "ABOUT" },
 ];
 
 const Footer = () => {
   return (
-    <div style={{ background: "#000", color: "#fff" }}>
+    <div
+      style={{
+        background: "#000",
+        color: "#fff",
+        position: "sticky",
+        bottom: "0",
+        width: "100%",
+      }}
+    >
       <div
         style={{
-          padding: "30px 60px",
+          padding: "10px 60px",
         }}
       >
         <div

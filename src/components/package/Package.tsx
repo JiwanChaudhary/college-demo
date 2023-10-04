@@ -42,8 +42,7 @@ const Package = () => {
     try {
       await axios.post(`/api/package`, { eventPackage });
       alert("Package created successfully");
-      setEventPackage("");
-      router.refresh();
+      router.push("/my-venue");
     } catch (error) {
       console.log(error);
     }
@@ -156,7 +155,9 @@ const Package = () => {
             />
           </div>
           {/* create package button */}
-          <button type="submit">Create Package</button>
+          <button type="submit" style={{ cursor: "pointer" }}>
+            Create Package
+          </button>
         </form>
       </main>
     </section>

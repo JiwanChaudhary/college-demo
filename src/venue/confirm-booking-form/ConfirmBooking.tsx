@@ -8,7 +8,8 @@ const ConfirmBooking = () => {
     e.preventDefault();
     try {
       const res = await axios.get(`api/confirm-booking`);
-      console.log(res);
+      // console.log(res);
+      alert("Booking confirmed");
     } catch (error) {
       console.log(error);
     }

@@ -5,8 +5,10 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import dayjs from "dayjs";
 import axios from "axios";
 import { Box, Modal, Typography } from "@mui/material";
+import { useRouter } from "next/navigation";
 
 const VenueBookingForm = ({ venueName }: any) => {
+  const router = useRouter();
   const [totalAmount, setTotalAmount] = React.useState<any>(0);
   const [currentUserName, setCurrentUserName] = React.useState<any>("");
   const [showModal, setShowModal] = React.useState<boolean>(false);
@@ -129,8 +131,9 @@ const VenueBookingForm = ({ venueName }: any) => {
       });
       alert("success");
       setShowModal(true);
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      // console.log(error.response.data.message);
+      alert(error.response.data.message);
     }
   }
 
@@ -154,6 +157,20 @@ const VenueBookingForm = ({ venueName }: any) => {
       console.log(error);
     }
   }
+
+  // handleSubmitConfirmBooking
+  const handleSubmitConfirmBooking = () => {
+    alert("Booking confirmed");
+    setShowModal(false);
+    router.push(`/user-profile`);
+  };
+
+  // handle cancel booking
+  const handleCancelBooking = () => {
+    alert("Booking cancelled");
+    setShowModal(false);
+    router.refresh();
+  };
 
   return (
     <>
@@ -229,7 +246,9 @@ const VenueBookingForm = ({ venueName }: any) => {
             placeholder="Enter specific message"
           />
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit" style={{ cursor: "pointer" }}>
+          Submit
+        </button>
       </form>
       {/* create modal to confirm booking */}
       {showModal && (
@@ -292,8 +311,20 @@ const VenueBookingForm = ({ venueName }: any) => {
                 </div>
                 {/* submit and cancel button */}
                 <div>
-                  <button type="button">Cancel</button>
-                  <button type="submit">Submit</button>
+                  <button
+                    type="button"
+                    onClick={handleCancelBooking}
+                    style={{ cursor: "pointer" }}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    onClick={handleSubmitConfirmBooking}
+                    style={{ cursor: "pointer" }}
+                  >
+                    Submit
+                  </button>
                 </div>
               </form>
             </Box>
