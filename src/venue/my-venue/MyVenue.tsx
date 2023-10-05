@@ -1,6 +1,7 @@
 "use client";
 
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import * as React from "react";
 
 const MyVenue = () => {
@@ -8,6 +9,8 @@ const MyVenue = () => {
   const [venueTags, setVenueTags] = React.useState<any>([]);
   const [contact, setContact] = React.useState<any>([]);
   const [loading, setLoading] = React.useState(false);
+  const [venueName, setVenueName] = React.useState<any>("");
+  const router = useRouter();
   // get venue details
   const getVenueDetails = async () => {
     setLoading(true);
@@ -17,10 +20,16 @@ const MyVenue = () => {
     setMyVenue(response.data.VenueDetails);
     setVenueTags(response.data.VenueDetails.tags);
     setContact(response.data.VenueDetails.phone);
+    setVenueName(response.data.VenueDetails.venueName);
     // yaha data aaucha
     setLoading(false);
   };
   // console.log(myVenue.venueName);
+
+  // update venue
+  const handleUpdateVenue = () => {
+    router.push(`/my-venue/${venueName}`);
+  };
 
   // render venue details, fire once
   React.useEffect(() => {
@@ -55,6 +64,7 @@ const MyVenue = () => {
             <button
               type="submit"
               style={{ padding: "5px 8px", cursor: "pointer" }}
+              onClick={handleUpdateVenue}
             >
               Update Venue
             </button>

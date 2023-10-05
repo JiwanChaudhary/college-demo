@@ -6,6 +6,7 @@ const venueSpaceSchema = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
       ref: "User",
       required: true,
+      unique: true,
     },
     venueName: {
       type: String,
