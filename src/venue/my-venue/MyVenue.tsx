@@ -31,6 +31,11 @@ const MyVenue = () => {
     router.push(`/my-venue/${venueName}`);
   };
 
+  // upload image
+  const handleUploadLImage = () => {
+    router.push(`/my-venue/upload-image`);
+  };
+
   // render venue details, fire once
   React.useEffect(() => {
     getVenueDetails();
@@ -61,13 +66,26 @@ const MyVenue = () => {
             }}
           >
             <h2>Venue Details</h2>
-            <button
-              type="submit"
-              style={{ padding: "5px 8px", cursor: "pointer" }}
-              onClick={handleUpdateVenue}
-            >
-              Update Venue
-            </button>
+            <div>
+              <button
+                type="submit"
+                style={{
+                  padding: "5px 8px",
+                  cursor: "pointer",
+                  marginRight: "10px",
+                }}
+                onClick={handleUpdateVenue}
+              >
+                Update Venue
+              </button>
+              <button
+                type="submit"
+                style={{ padding: "5px 8px", cursor: "pointer" }}
+                onClick={handleUploadLImage}
+              >
+                Upload Image
+              </button>
+            </div>
           </div>
           <hr style={{ width: "100%", marginBottom: "10px" }} />
           {/* my venue details */}
@@ -123,8 +141,10 @@ const MyVenue = () => {
                 ))}
               </p>
             </div>
+            {/* image */}
           </div>
         </div>
+        // image
       )}
     </>
   );
