@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     return NextResponse.json(
       {
-        message: "No bookings found",
+        message: "Something went wrong",
         success: false,
       },
       {

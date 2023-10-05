@@ -78,6 +78,12 @@ const UserProfile = () => {
     alert("Please check your mail for verification link");
   };
 
+  // handle pay now
+  const handlePayNow = (e: any) => {
+    const eventId = e.target.value;
+    console.log(eventId);
+  };
+
   return (
     <div
       style={{
@@ -312,7 +318,7 @@ const UserProfile = () => {
                           >
                             Cancel
                           </button>
-                          {/* <button
+                          <button
                             type="submit"
                             style={{
                               cursor: "pointer",
@@ -322,10 +328,10 @@ const UserProfile = () => {
                               padding: "4px",
                             }}
                             onClick={handlePayNow}
-                            value={booking.formattedFromDateTime}
+                            value={booking._id}
                           >
                             Pay Now
-                          </button> */}
+                          </button>
                         </td>
                       </tr>
                     </>

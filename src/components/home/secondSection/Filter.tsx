@@ -33,7 +33,7 @@ const Filter = () => {
             flexDirection: "column",
             justifyContent: "center",
             textAlign: "center",
-            marginRight: "5px"
+            marginRight: "5px",
           }}
         >
           <input
@@ -42,21 +42,7 @@ const Filter = () => {
             id="location"
             placeholder="Search by location"
           />
-        </div>
-        {/* search by entering name */}
-        <div>
-          {/* <label htmlFor="event">Event</label> */}
-          <select
-            name=""
-            style={{ width: "150px", padding: "5px", border: "none" }}
-          >
-            <option value="all">Select Event</option>
-            <option value="marriage">Marriage</option>
-            <option value="jk">jk</option>
-            <option value="jk">jk</option>
-            <option value="jk">jk</option>
-          </select>
-        </div>
+        </div>  
         <div
           style={{
             display: "flex",

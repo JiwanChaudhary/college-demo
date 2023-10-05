@@ -49,8 +49,26 @@ const Package = () => {
   };
 
   return (
-    <section style={{ margin: "10px auto" }}>
-      <main style={{ background: "#000", color: "#fff", padding: "10px 15px" }}>
+    <section
+      style={{
+        margin: "10px auto",
+        display: "flex",
+        justifyContent: "center",
+        height: "80vh",
+      }}
+    >
+      <main
+        style={{
+          background: "#000",
+          color: "#fff",
+          padding: "10px 60px",
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+        }}
+      >
         <h1 style={{ margin: "5px 0" }}>Create Package</h1>
         <form onSubmit={handlePackageSubmit}>
           {/* name */}

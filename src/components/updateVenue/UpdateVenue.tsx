@@ -42,7 +42,15 @@ const UpdateVenue: React.FC<UpdateVenueProps> = ({ params }) => {
   };
 
   return (
-    <section>
+    <section
+      style={{
+        height: "80vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+      }}
+    >
       <h1>Update Venue</h1>
       {/* form to update venue details */}
       <form onSubmit={handleVenueUpdate}>

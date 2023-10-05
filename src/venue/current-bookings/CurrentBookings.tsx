@@ -10,7 +10,7 @@ const CurrentBookings = () => {
   const getCurrentBookings = async () => {
     setLoading(true);
     const response = await axios.get(`api/event-booking/getBookingDetails`);
-    console.log(response.data.event);
+    // console.log(response.data.event);
     setCurrentBookings(response.data.event);
 
     // yaha data aaucha
