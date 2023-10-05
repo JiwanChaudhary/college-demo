@@ -2,7 +2,7 @@ import connectDB from "@/db/connext";
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import Event from "@/models/eventBooking";
-import axios from "axios";
+import Venue from "@/models/venueSpace";
 
 export async function GET(request: NextRequest) {
   await connectDB();
@@ -20,23 +20,17 @@ export async function GET(request: NextRequest) {
     const userId = decodedToken.id;
     // console.log(userId);
 
-    // find event on the basis of userId
-    const event: any = await Event.find({ userId });
+    // user Id ko adhar maa venue khojna parcha ani tyo venue id ko adhar maa event khojna parcha
+    const venue = await Venue.findOne({ userId });
+    const venueId = venue._id;
+
+    // find event on the basis of venue id
+    const event = await Event.find({ venueId })
+      .populate("userId")
+      .populate("packageId")
+      .populate("venueId");
     // console.log(event);
-
-    // get venue details
-    // let venueId: any = [];
-
-    // event.map((venue: any) => {
-    //   venueId.push(venue.venueId);
-    // });
-    // console.log(venueId);
-
-    // venueId.map((name: any) => {
-    //   console.log(name.venueName);
-    // });
-
-    // get package details
+    // console.log(event);
 
     if (event) {
       return NextResponse.json(

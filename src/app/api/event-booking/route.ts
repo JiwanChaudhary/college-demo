@@ -89,7 +89,7 @@ export async function POST(request: NextRequest) {
     // console.log(decodedString);
 
     const venue = await Venue.findOne({ venueName: decodedString });
-    console.log(venue);
+    // console.log(venue);
 
     const rentalFee = venue.rentalFee;
 

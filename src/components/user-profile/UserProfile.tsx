@@ -9,8 +9,6 @@ const UserProfile = () => {
   const [profile, setProfile] = React.useState<any>(true); // user profile
   const [userBookings, setUserBookings] = React.useState<any>(false); // user bookings
   const [bookings, setBookings] = React.useState<any>([]);
-  const [packageId, setPackageId] = React.useState<any>("");
-  const [currentBookings, setCurrentBookings] = React.useState<any>([]);
 
   // table head
   const tableHead = [
@@ -39,6 +37,10 @@ const UserProfile = () => {
       value: "Total Attendee",
     },
     {
+      id: 7,
+      value: "Status",
+    },
+    {
       id: 8,
       value: "Action",
     },
@@ -47,10 +49,9 @@ const UserProfile = () => {
   //   get user bookings
   const getUserBookings = async () => {
     try {
-      const response = await axios.get(`/api/event-booking/get-user-booking`);
-      // console.log(response.data.event);
+      const response = await axios.get(`/api/event-booking/getUserBookings`);
       //   yaha data aaucha
-      setBookings(response.data.event);
+      setBookings(response.data.bookings);
     } catch (error) {
       console.log(error);
     }
@@ -62,8 +63,6 @@ const UserProfile = () => {
       const response = await axios.get(`/api/user`);
       // console.log(response.data.user);
       setUserDetails(response.data.user);
-      setCurrentBookings(response.data.user.currentBookings);
-      console.log(response.data.user.currentBookings);
     } catch (error) {
       console.log(error);
     }
@@ -78,14 +77,6 @@ const UserProfile = () => {
   const handleUserVerify = () => {
     alert("Please check your mail for verification link");
   };
-
-  // handle Pay
-  // const handlePayNow = (e: any) => {
-  //   // console.log(e.target.value);
-  //   const fromDateTime = e.target.value;
-  //   console.log(fromDateTime);
-  //   alert(`${fromDateTime} is your booking date and time}`);
-  // };
 
   return (
     <div
@@ -229,7 +220,7 @@ const UserProfile = () => {
                     ))}
                   </tr>
                   {/* body */}
-                  {currentBookings.map((booking: any) => (
+                  {bookings.map((booking: any) => (
                     <>
                       <tr style={{ border: "1px solid red" }} key={booking._id}>
                         <td
@@ -239,7 +230,7 @@ const UserProfile = () => {
                             padding: "2px",
                           }}
                         >
-                          {booking.venueName}
+                          {booking?.venueId?.venueName}
                         </td>
                         <td
                           style={{
@@ -248,7 +239,7 @@ const UserProfile = () => {
                             padding: "2px",
                           }}
                         >
-                          {booking.choosePackage}
+                          {booking?.packageId?.name}
                         </td>
                         <td
                           style={{
@@ -257,7 +248,9 @@ const UserProfile = () => {
                             padding: "2px",
                           }}
                         >
-                          {booking.formattedFromDateTime}
+                          {dayjs(booking?.eventFromDate).format(
+                            "DD/MM/YYYY, h:mm a"
+                          )}
                         </td>
                         <td
                           style={{
@@ -266,7 +259,9 @@ const UserProfile = () => {
                             padding: "2px",
                           }}
                         >
-                          {booking.formattedToDateTime}
+                          {dayjs(booking?.eventToDate).format(
+                            "DD/MM/YYYY, h:mm a"
+                          )}
                         </td>
                         <td
                           style={{
@@ -275,7 +270,7 @@ const UserProfile = () => {
                             padding: "2px",
                           }}
                         >
-                          {booking.totalAmount}
+                          {booking?.totalAmount}
                         </td>
                         <td
                           style={{
@@ -284,7 +279,16 @@ const UserProfile = () => {
                             padding: "2px",
                           }}
                         >
-                          {booking.guests}
+                          {booking?.totalAttendees}
+                        </td>
+                        <td
+                          style={{
+                            border: "1px solid red",
+                            textAlign: "center",
+                            padding: "2px",
+                          }}
+                        >
+                          {booking?.status}
                         </td>
                         <td
                           style={{
