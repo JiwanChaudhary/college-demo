@@ -1,6 +1,7 @@
 "use client";
 
 import axios from "axios";
+import { set } from "mongoose";
 import { useRouter } from "next/navigation";
 import * as React from "react";
 
@@ -31,6 +32,30 @@ const MyPackage = () => {
   // create new package
   const handleCreateNewPackage = () => {
     router.push("/venue/package");
+  };
+
+  // update package
+  const updatePackage = (e: any) => {
+    // console.log(e.target.value);
+    const packageId = e.target.value;
+
+    router.push(`/venue/package/${packageId}`);
+  };
+
+  // delete package
+  const deletePackage = async (e: any) => {
+    const confirmDelete = confirm("Are you sure?");
+    const packageId = e.target.value;
+
+    if (confirmDelete) {
+      try {
+        await axios.delete(`/api/${packageId}`);
+        alert("Package deleted");
+        router.refresh();
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   return (
@@ -116,6 +141,7 @@ const MyPackage = () => {
                         }}
                       >
                         <button
+                          value={venuePackage._id}
                           type="submit"
                           style={{
                             padding: "5px 8px",
@@ -123,16 +149,19 @@ const MyPackage = () => {
                             marginRight: "10px",
                             height: "30px",
                           }}
+                          onClick={updatePackage}
                         >
                           Update
                         </button>
                         <button
+                          value={venuePackage._id}
                           type="submit"
                           style={{
                             padding: "5px 8px",
                             cursor: "pointer",
                             height: "30px",
                           }}
+                          onClick={deletePackage}
                         >
                           Delete
                         </button>
