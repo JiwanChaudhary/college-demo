@@ -16,12 +16,12 @@ export async function POST(request: NextRequest) {
         },
       }
     );
-    //   console.log(khaltiResponse);
+    console.log(khaltiResponse);
 
     if (khaltiResponse) {
       return NextResponse.json(
         {
-          message: "Payment Successful",
+          message: "Payment Data fetched",
           success: true,
           data: khaltiResponse.data,
         },

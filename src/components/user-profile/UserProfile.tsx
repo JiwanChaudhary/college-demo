@@ -3,8 +3,10 @@
 import axios from "axios";
 import * as React from "react";
 import dayjs from "dayjs";
+import { useRouter } from "next/navigation";
 
 const UserProfile = () => {
+  const router = useRouter();
   const [userDetails, setUserDetails] = React.useState<any>({});
   const [profile, setProfile] = React.useState<any>(true); // user profile
   const [userBookings, setUserBookings] = React.useState<any>(false); // user bookings
@@ -81,7 +83,7 @@ const UserProfile = () => {
   // handle pay now
   const handlePayNow = (e: any) => {
     const eventId = e.target.value;
-    console.log(eventId);
+    router.push(`/venue/payment/${eventId}`);
   };
 
   return (
