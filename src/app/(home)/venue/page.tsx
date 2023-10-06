@@ -5,11 +5,11 @@ import React from "react";
 
 const page = () => {
   // search room by type
-  function filterByType() {}
+  // function filterByType() {}
 
   return (
     <div>
-      <div
+      {/* <div
         style={{
           background: "#000",
           color: "#fff",
@@ -19,9 +19,9 @@ const page = () => {
           justifyContent: "space-around",
           alignItems: "center",
         }}
-      >
-        <Filter />
-        <div>
+      > */}
+      {/* <Filter /> */}
+      {/* <div>
           <select
             style={{ padding: "5px 8px" }}
             value={"all"}
@@ -33,8 +33,8 @@ const page = () => {
             <option value="non-deluxe">Welcome</option>
             <option value="non-deluxe">Anniversary</option>
           </select>
-        </div>
-      </div>
+        </div> */}
+      {/* </div> */}
       <div
         style={{
           background: "#000",

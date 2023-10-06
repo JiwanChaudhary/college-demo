@@ -16,7 +16,7 @@ const page = () => {
   const userRole = async () => {
     try {
       const response = await axios.get(`/api/user`);
-      console.log(response.data.user);
+      // console.log(response.data.user);
       setIsAdmin(response.data.user);
     } catch (error) {
       console.log(error);

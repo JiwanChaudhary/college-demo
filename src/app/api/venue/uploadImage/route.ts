@@ -45,6 +45,9 @@ export async function POST(request: NextRequest) {
     // );
     // return NextResponse.json({ Message: "Success", status: 201 });
 
+    const { image } = await request.json();
+    // console.log(image);
+
     //  get user data from cookies
     const token: any = await request.cookies.get("token")?.value;
     const decodedToken: any = await jwt.verify(
@@ -57,7 +60,9 @@ export async function POST(request: NextRequest) {
 
     // get venueId from usrId
     const venue = await Venue.findOne({ userId: userId });
-    // console.log(venue);
+    venue.imageUrls.push(image);
+    console.log(venue.imageUrls);
+    // console.log(imageUpload);
 
     return NextResponse.json(
       {

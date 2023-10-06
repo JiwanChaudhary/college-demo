@@ -25,6 +25,9 @@ export const config = {
     "/home/:path*",
     "/event",
     "/venue/:path*",
-    "/my-venue",
+    "/my-venue/:path*",
+    "/admin/:path*",
+    "/success",
+    "/user-profile/:path*", // user profile
   ],
 };

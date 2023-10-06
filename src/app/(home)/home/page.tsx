@@ -38,7 +38,7 @@ const page = () => {
     <div>
       <>
         <FirstSection />
-        <Filter />
+        {/* <Filter /> */}
         <SecondSection />
       </>
 

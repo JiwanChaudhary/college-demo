@@ -9,7 +9,7 @@ import Link from "next/link";
 const VenueSection = () => {
   const router = useRouter();
   const [venues, setVenues] = React.useState([]);
-
+  const [userRole, setUserRole] = React.useState<any>({});
 
   // Get data from database
   const getVenueDetails = async () => {
@@ -19,8 +19,16 @@ const VenueSection = () => {
     setVenues(response.data.venues);
   };
 
+  // get user role
+  const getUserRole = async () => {
+    const response = await axios.get("/api/user");
+    // console.log(response.data);
+    setUserRole(response.data.user);
+  };
+
   React.useEffect(() => {
     getVenueDetails();
+    getUserRole();
   }, []);
 
   return (
@@ -105,12 +113,12 @@ const VenueSection = () => {
                 style={{
                   padding: "5px 8px",
                   textDecoration: "none",
-                  border: "1px solid #000",
+                  border: userRole.role === "user" ? "1px solid #000" : "none",
                   color: "#000",
-                  borderRadius: "5px"
+                  borderRadius: "5px",
                 }}
               >
-                View Details
+                {userRole.role === "user" ? "View Details" : null}
               </Link>
             </div>
           </div>

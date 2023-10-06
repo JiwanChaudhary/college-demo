@@ -27,12 +27,6 @@ const SecondSection = () => {
   return (
     <section style={{ padding: "30px 60px" }}>
       <div style={{ background: "#000", color: "#fff", padding: "10px 15px" }}>
-        {/* date and search */}
-        {/* <Filter /> */}
-        {/*  */}
-        {/*  */}
-        {/*  */}
-        {/* event and venue */}
         <main
           style={{
             display: "grid",
@@ -42,16 +36,8 @@ const SecondSection = () => {
             gap: "10px",
           }}
         >
-          {/* event space */}
-          {/* <EventSection /> */}
-          {/* venue space */}
           <VenueSection />
         </main>
-        {/*  */}
-        {/*  */}
-        {/*  */}
-        {/* top events */}
-        <main></main>
       </div>
     </section>
   );
