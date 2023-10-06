@@ -27,10 +27,6 @@ const NavbarDesktop = () => {
         position: "sticky",
         top: 0,
         zIndex: 100,
-        // overflow: "hidden",
-        // width: "100%",
-        // marginBottom: "600px",
-
       }}
     >
       <div
@@ -50,7 +46,7 @@ const NavbarDesktop = () => {
           />
         </div>
         {/* search by venue */}
-        <div
+        {/* <div
           style={{
             zIndex: 100,
             textAlign: "center",
@@ -62,15 +58,13 @@ const NavbarDesktop = () => {
             placeholder="search venue"
             style={{ padding: "8px" }}
           />
-        </div>
+        </div> */}
         <div>
           {navElements.map((navElement) => (
             <>
               <Link
                 key={navElement.id}
                 className={styles.link}
-                // className={styles.link === navElement.id ? 'active' : ""}
-                // onClick={() => handleNavItem(navElement.id)}
                 href={navElement.id}
               >
                 {navElement.value}

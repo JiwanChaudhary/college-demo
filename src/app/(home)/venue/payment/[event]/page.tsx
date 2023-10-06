@@ -4,12 +4,12 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import * as React from "react";
 
-const page = ({ params }) => {
+const page = ({ params }: any) => {
   const router = useRouter();
   //   console.log(params);
   const eventId = params.event;
   //   console.log(eventId);
-  const [eventDetails, setEventDetails] = React.useState({});
+  const [eventDetails, setEventDetails] = React.useState<any>({});
 
   //   get event details on the basis of eventId
   const getEventDetails = async () => {
@@ -102,7 +102,7 @@ const page = ({ params }) => {
             </p>
             <div>
               <button
-                type="Submit"
+                type="submit"
                 style={{
                   padding: "5px 8px",
                   border: "none",

@@ -19,8 +19,8 @@ const Footer = () => {
       style={{
         background: "#000",
         color: "#fff",
-        position: "sticky",
-        bottom: "0",
+        // position: "sticky",
+        // bottom: "0",
         width: "100%",
       }}
     >

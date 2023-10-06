@@ -307,7 +307,7 @@ const UserProfile = () => {
                             flexDirection: "column",
                           }}
                         >
-                          <button
+                          {/* <button
                             type="button"
                             style={{
                               marginBottom: "2px",
@@ -319,7 +319,7 @@ const UserProfile = () => {
                             }}
                           >
                             Cancel
-                          </button>
+                          </button> */}
                           <button
                             type="submit"
                             style={{

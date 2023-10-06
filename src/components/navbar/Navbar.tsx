@@ -9,16 +9,6 @@ import NavbarMobile from "./NavbarMobile";
 import NavbarDesktop from "./NavbarDesktop";
 
 const Navbar = () => {
-  // let cookieStore = cookies();
-  // let token, decodedToken;
-  // token = cookieStore.get("token")?.value;
-  // decodedToken = jwt.verify(
-  //   token as string,
-  //   process.env.JWT_SECRET as string
-  // ) as JwtPayload;
-
-  // const name = decodedToken.name;
-  // let firstName = name.split(" ")[0];
 
   // theme
   const theme = useTheme();

@@ -40,10 +40,10 @@ const Filter = () => {
             style={{ width: "150px", padding: "5px", border: "none" }}
             type="text"
             id="location"
-            placeholder="Search by location"
+            placeholder="Search by venue name"
           />
-        </div>  
-        <div
+        </div>
+        {/* <div
           style={{
             display: "flex",
             marginLeft: "5px",
@@ -60,7 +60,7 @@ const Filter = () => {
           >
             Search
           </button>
-        </div>
+        </div> */}
       </div>
     </main>
   );
